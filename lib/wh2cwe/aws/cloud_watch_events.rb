@@ -47,7 +47,7 @@ module Wh2cwe
           "task_definition" => task_definition,
           "container" => container,
           "command" => Shellwords.split(command),
-        }).sub('"###$.resources###"', "<reosurces>").sub('"###$.time###"', "<time>")
+        }).sub('"###$.resources###"', "<resources>").sub('"###$.time###"', "<time>")
       end
 
       def generate_id
