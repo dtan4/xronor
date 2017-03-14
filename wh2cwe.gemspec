@@ -9,9 +9,9 @@ Gem::Specification.new do |spec|
   spec.authors       = ["Daisuke Fujita"]
   spec.email         = ["dtanshi45@gmail.com"]
 
-  spec.summary       = %q{TODO: Write a short summary, because Rubygems requires one.}
-  spec.description   = %q{TODO: Write a longer description or delete this line.}
-  spec.homepage      = "TODO: Put your gem's website or public repo URL here."
+  spec.summary       = %q{Whenever DSL -> CloudWatch Events Schedule Rule & ECS Task Parameter}
+  spec.description   = %q{Convert Whenever DSL to CloudWatch Events Schedule Rule to invoke job on ECS}
+  spec.homepage      = "https://github.com/dtan4/wh2cwe"
   spec.license       = "MIT"
 
   # Prevent pushing this gem to RubyGems.org. To allow pushes either set the 'allowed_push_host'
