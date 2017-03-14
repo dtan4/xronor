@@ -1,5 +1,6 @@
 require "whenever"
 
+require "wh2cwe/job"
 require "wh2cwe/parser"
 require "wh2cwe/version"
 
