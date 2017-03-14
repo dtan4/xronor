@@ -7,10 +7,10 @@ module Wh2cwe
 
       it "should return list of cron expression and task list" do
         expect(described_class.parse(filename)).to eq([
-          { cron: "15 * * * *", task: "/bin/bash -l -c 'bundle exec rake send_awesome_mail RAILS_ENV=production'" },
-          { cron: "10 * * * *", task: "/bin/bash -l -c 'bundle exec rake update_elasticsearch RAILS_ENV=production'" },
-          { cron: "0 0 * * *", task: "/bin/bash -l -c 'bundle exec rake send_greeting_notification RAILS_ENV=production'" },
-          { cron: "10 0 * * *", task: "/bin/bash -l -c 'bundle exec rake create_new_companies RAILS_ENV=production'" },
+          { cron: "15 * * * *", command: "/bin/bash -l -c 'bundle exec rake send_awesome_mail RAILS_ENV=production'" },
+          { cron: "10 * * * *", command: "/bin/bash -l -c 'bundle exec rake update_elasticsearch RAILS_ENV=production'" },
+          { cron: "0 0 * * *", command: "/bin/bash -l -c 'bundle exec rake send_greeting_notification RAILS_ENV=production'" },
+          { cron: "10 0 * * *", command: "/bin/bash -l -c 'bundle exec rake create_new_companies RAILS_ENV=production'" },
         ])
       end
     end

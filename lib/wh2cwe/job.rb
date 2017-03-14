@@ -3,11 +3,11 @@ module Wh2cwe
     DOM_INDEX = 2
     DOW_INDEX = 4
 
-    attr_reader :cron, :task
+    attr_reader :cron, :command
 
-    def initialize(cron, task)
+    def initialize(cron, command)
       @cron = cron
-      @task = task
+      @command = command
     end
 
     def cloud_watch_cron
@@ -18,7 +18,7 @@ module Wh2cwe
     end
 
     def name(regexp)
-      matched = Regexp.new(regexp).match(@task)
+      matched = Regexp.new(regexp).match(@command)
       matched ? matched[1] : ""
     end
   end

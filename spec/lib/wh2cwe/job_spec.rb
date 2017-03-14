@@ -6,12 +6,12 @@ module Wh2cwe
       "10 0 * * *"
     end
 
-    let(:task) do
+    let(:command) do
       "/bin/bash -l -c 'bundle exec rake create_new_companies RAILS_ENV=production'"
     end
 
     let(:job) do
-      Job.new(cron, task)
+      Job.new(cron, command)
     end
 
     describe "#cloud_watch_cron" do
@@ -48,7 +48,7 @@ module Wh2cwe
           'bundle exec rake (\w+) RAILS_ENV=.*\z'
         end
 
-        it "should extract task name using the given regexp" do
+        it "should calculate job name using the given regexp" do
           expect(job.name(regexp)).to eq "create_new_companies"
         end
       end
