@@ -11,6 +11,37 @@ module Wh2cwe
         described_class.new(client: client)
       end
 
+      describe "#deregister_job" do
+        let(:name) do
+          "scheduler-production-create_new_companies"
+        end
+
+        let(:targets) do
+          [
+            {
+              id: "6e70e716-1e14-465b-85ad-12744aedefb7",
+              arn: "arn:aws:lambda:ap-northeast-1:012345678901:function:scheduler-production-create_new_companies",
+            }
+          ]
+        end
+
+        before do
+          client.stub_responses(:list_targets_by_rule, targets: targets)
+        end
+
+        it "should delete rule and targets" do
+          expect(client).to receive(:remove_targets).with({
+            rule: "scheduler-production-create_new_companies",
+            ids: ["6e70e716-1e14-465b-85ad-12744aedefb7"],
+          })
+          expect(client).to receive(:delete_rule).with({
+            name: "scheduler-production-create_new_companies",
+          })
+
+          cwe.deregister_job(name)
+        end
+      end
+
       describe "#list_jobs" do
         let(:rules) do
           [

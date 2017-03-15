@@ -5,6 +5,12 @@ module Wh2cwe
         @client = client
       end
 
+      def deregister_job(name)
+        targets = @client.list_targets_by_rule(rule: name).targets
+        @client.remove_targets(rule: name, ids: targets.map(&:id))
+        @client.delete_rule(name: name)
+      end
+
       def list_jobs(prefix = "")
         @client.list_rules.rules.select { |rule| rule.name.start_with?(prefix) }.map(&:to_h)
       end
