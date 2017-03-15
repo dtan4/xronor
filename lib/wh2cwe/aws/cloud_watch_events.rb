@@ -16,7 +16,7 @@ module Wh2cwe
       end
 
       def register_job(job, cluster, task_definition, container, target_function_arn)
-        rule_arn = put_rule(job.name, job.cloud_watch_cron)
+        rule_arn = put_rule(job.name, job.schedule)
         put_target(job.name, cluster, task_definition, container, job.command, target_function_arn)
         rule_arn
       end

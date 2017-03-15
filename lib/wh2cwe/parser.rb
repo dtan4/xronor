@@ -5,7 +5,7 @@ module Wh2cwe
         fields = line.split(" ")
         cron = fields[0..4].join(" ")
         command = fields[5..-1].join(" ")
-        Job.new(cron, command, prefix, regexp)
+        Job.from_crontab(cron, command, prefix, regexp)
       end
     end
   end

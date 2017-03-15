@@ -2,57 +2,25 @@ require "spec_helper"
 
 module Wh2cwe
   describe Job do
-    let(:cron) do
-      "10 0 * * *"
-    end
-
-    let(:command) do
-      "/bin/bash -l -c 'bundle exec rake create_new_companies RAILS_ENV=production'"
-    end
-
-    let(:prefix) do
-      "scheduler-"
-    end
-
-    let(:regexp) do
-      "regexp"
-    end
-
-    let(:job) do
-      Job.new(cron, command, prefix, regexp)
-    end
-
-    describe "#cloud_watch_cron" do
-      context "when the job will be invoked every day" do
-        it "should convert to CloudWatch cron expression" do
-          expect(job.cloud_watch_cron).to eq "10 0 * * ? *"
-        end
+    describe ".from_crontab" do
+      let(:cron) do
+        "10 0 * * *"
       end
 
-      context "when the job will be invoked at the specific days" do
-        let(:cron) do
-          "10 0 1-3 * *"
-        end
-
-        it "should convert to CloudWatch cron expression" do
-          expect(job.cloud_watch_cron).to eq "10 0 1-3 * * *"
-        end
+      let(:command) do
+        "/bin/bash -l -c 'bundle exec rake create_new_companies RAILS_ENV=production'"
       end
 
-      context "when the job will be invoked at the specific weekdays" do
-        let(:cron) do
-          "10 0 * * 1-3"
-        end
-
-        it "should convert to CloudWatch cron expression" do
-          expect(job.cloud_watch_cron).to eq "10 0 * * 1-3 *"
-        end
-      end
-    end
-
-    describe "#name" do
       let(:prefix) do
         "scheduler-"
+      end
+
+      let(:regexp) do
+        ""
+      end
+
+      let(:job) do
+        described_class.from_crontab(cron, command, prefix, regexp)
       end
 
       context "when valid regexp is given" do
@@ -72,6 +40,26 @@ module Wh2cwe
 
         it "should return empty string" do
           expect(job.name).to eq "scheduler-"
+        end
+      end
+
+      context "when the job will be invoked at the specific days" do
+        let(:cron) do
+          "10 0 1-3 * *"
+        end
+
+        it "should convert to CloudWatch cron expression" do
+          expect(job.schedule).to eq "10 0 1-3 * * *"
+        end
+      end
+
+      context "when the job will be invoked at the specific weekdays" do
+        let(:cron) do
+          "10 0 * * 1-3"
+        end
+
+        it "should convert to CloudWatch cron expression" do
+          expect(job.schedule).to eq "10 0 * * 1-3 *"
         end
       end
     end

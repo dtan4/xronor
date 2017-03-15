@@ -3,35 +3,45 @@ module Wh2cwe
     DOM_INDEX = 2
     DOW_INDEX = 4
 
-    def initialize(cron, command, prefix, regexp)
-      @cron = cron
-      @command = command
-      @prefix = prefix
-      @regexp = regexp
+    class << self
+      def from_crontab(cron, command, prefix, regexp)
+        name = name_from_command(command, prefix, regexp)
+        schedule = cloud_watch_schedule(cron)
+
+        self.new(name, schedule, command)
+      end
+
+      private
+
+      def cloud_watch_schedule(cron)
+        cron_fields = cron.split(" ")
+        cron_fields[DOW_INDEX] = "?" if cron_fields[DOM_INDEX] == "*" && cron_fields[DOW_INDEX] == "*"
+        cron_fields << "*" # Year
+        cron_fields.join(" ")
+      end
+
+      def name_from_command(command, prefix, regexp)
+        matched = Regexp.new(regexp).match(command)
+        "#{prefix}#{matched ? matched[1] : ""}"
+      end
     end
 
-    def cloud_watch_cron
-      cron_fields = @cron.split(" ")
-      cron_fields[DOW_INDEX] = "?" if cron_fields[DOM_INDEX] == "*" && cron_fields[DOW_INDEX] == "*"
-      cron_fields << "*" # Year
-      cron_fields.join(" ")
+    def initialize(name, schedule, command)
+      @name = name
+      @schedule = schedule
+      @command = command
     end
 
     def command
       @command
     end
 
-    def cron
-      @cron
+    def name
+      @name
     end
 
-    def name
-      unless @name
-        matched = Regexp.new(@regexp).match(@command)
-        @name = "#{@prefix}#{matched ? matched[1] : ""}"
-      end
-
-      @name
+    def schedule
+      @schedule
     end
   end
 end

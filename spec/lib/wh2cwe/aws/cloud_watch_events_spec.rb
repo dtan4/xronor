@@ -15,7 +15,7 @@ module Wh2cwe
         let(:job) do
           double("job",
             name: "scheduler-production-create_new_companies",
-            cron: "10 0 * * *",
+            schedule: "10 0 * * *",
             command: "/bin/bash -l -c 'bundle exec rake create_new_companies RAILS_ENV=production'",
           )
         end
@@ -135,7 +135,7 @@ module Wh2cwe
         let(:job) do
           double("job",
             name: "scheduler-production-create_new_companies",
-            cron: "10 0 * * *",
+            schedule: "10 0 * * ? *",
             command: "/bin/bash -l -c 'bundle exec rake create_new_companies RAILS_ENV=production'",
             cloud_watch_cron: "10 0 * * ? *",
           )
