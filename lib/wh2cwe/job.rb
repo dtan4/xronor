@@ -36,8 +36,8 @@ module Wh2cwe
       @command
     end
 
-    def hashcode
-      OpenSSL::Digest::SHA256.hexdigest("#{@name}\t#{@schedule}\t#{@command}")[0..12]
+    def rule_name
+      "#{@name}-#{hashcode}"
     end
 
     def name
@@ -46,6 +46,12 @@ module Wh2cwe
 
     def schedule
       @schedule
+    end
+
+    private
+
+    def hashcode
+      OpenSSL::Digest::SHA256.hexdigest("#{@name}\t#{@schedule}\t#{@command}")[0..12]
     end
   end
 end

@@ -64,7 +64,7 @@ module Wh2cwe
       end
     end
 
-    describe "#hashcode" do
+    describe "#rule_name" do
       let(:job) do
         described_class.new(
           "scheduler-production-create_new_companies",
@@ -73,8 +73,8 @@ module Wh2cwe
         )
       end
 
-      it "should calculate hashcode" do
-        expect(job.hashcode).to eq "32343ed63f077"
+      it "should return rule name" do
+        expect(job.rule_name).to eq "scheduler-production-create_new_companies-32343ed63f077"
       end
     end
   end
