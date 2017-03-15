@@ -1,0 +1,5 @@
+#!/usr/bin/env ruby
+
+require "wh2cwe"
+
+Wh2cwe::CLI.start(ARGV)
