@@ -26,7 +26,7 @@ module Wh2cwe
       def put_rule(name, cron)
         @client.put_rule({
           name: name,
-          schedule_expression: cron,
+          schedule_expression: "cron(#{cron})",
         }).rule_arn
       end
 
