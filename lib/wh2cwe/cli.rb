@@ -40,17 +40,18 @@ module Wh2cwe
         jobs = Wh2cwe::Parser.parse(options[:filename], options[:prefix], options[:regexp])
         function_arn = lambda.retrieve_function_arn(options[:function])
 
-        rule_arns = jobs.map do |job|
+        current_jobs = cwe.list_jobs(options[:prefix])
+        add_jobs, _ = compare_jobs(current_jobs, jobs)
+
+        added_rule_arns = add_jobs.map do |job|
           if options[:dry_run]
             puts "[DRYRUN] #{job.name} will be registered to CloudWatch Events"
           else
             arn = cwe.register_job(
-              job.name,
-              job.cloud_watch_cron,
+              job,
               options[:cluster],
               options[:task_definition],
               options[:container],
-              job.command,
               function_arn,
             )
             puts "Registered #{arn}"
@@ -59,10 +60,27 @@ module Wh2cwe
         end
 
         if options[:dry_run]
-          puts "[DRYRUN] #{rule_arns} will be added to DynamoDB"
+          puts "[DRYRUN] #{added_rule_arns} will be added to DynamoDB"
         else
-          dynamodb.sync_rule_arns(options[:table], rule_arns, [])
+          dynamodb.sync_rule_arns(options[:table], added_rule_arns, [])
         end
+      end
+
+      private
+
+      def compare_jobs(current_jobs, next_jobs)
+        add_jobs, delete_jobs = [], []
+        next_job_names = next_jobs.map(&:rule_name)
+
+        next_jobs.each do |job|
+          add_jobs << job unless current_jobs.include?(job.rule_name)
+        end
+
+        current_jobs.each do |job|
+          delete_jobs << job unless next_job_names.include?(job)
+        end
+
+        return add_jobs, delete_jobs
       end
     end
   end
