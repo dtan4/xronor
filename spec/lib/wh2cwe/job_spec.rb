@@ -49,7 +49,7 @@ module Wh2cwe
         end
 
         it "should convert to CloudWatch cron expression" do
-          expect(job.schedule).to eq "10 0 1-3 * * *"
+          expect(job.schedule).to eq "cron(10 0 1-3 * * *)"
         end
       end
 
@@ -59,7 +59,7 @@ module Wh2cwe
         end
 
         it "should convert to CloudWatch cron expression" do
-          expect(job.schedule).to eq "10 0 * * 1-3 *"
+          expect(job.schedule).to eq "cron(10 0 * * 1-3 *)"
         end
       end
     end

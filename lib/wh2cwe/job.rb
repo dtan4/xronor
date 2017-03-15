@@ -17,7 +17,7 @@ module Wh2cwe
         cron_fields = cron.split(" ")
         cron_fields[DOW_INDEX] = "?" if cron_fields[DOM_INDEX] == "*" && cron_fields[DOW_INDEX] == "*"
         cron_fields << "*" # Year
-        cron_fields.join(" ")
+        "cron(#{cron_fields.join(" ")})"
       end
 
       def name_from_command(command, prefix, regexp)
