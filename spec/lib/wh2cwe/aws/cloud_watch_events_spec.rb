@@ -12,8 +12,12 @@ module Wh2cwe
       end
 
       describe "#deregister_job" do
-        let(:name) do
-          "scheduler-production-create_new_companies"
+        let(:job) do
+          double("job",
+            name: "scheduler-production-create_new_companies",
+            cron: "10 0 * * *",
+            command: "/bin/bash -l -c 'bundle exec rake create_new_companies RAILS_ENV=production'"
+          )
         end
 
         let(:targets) do
@@ -38,7 +42,7 @@ module Wh2cwe
             name: "scheduler-production-create_new_companies",
           })
 
-          cwe.deregister_job(name)
+          cwe.deregister_job(job)
         end
       end
 
