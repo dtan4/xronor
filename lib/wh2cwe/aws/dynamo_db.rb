@@ -12,12 +12,8 @@ module Wh2cwe
           {
             put_request: {
               item: {
-                "ARN" => {
-                  s: arn,
-                },
-                "InvokedAt" => {
-                  s: "0",
-                },
+                "ARN" => arn,
+                "InvokedAt" => "0"
               },
             },
           }
@@ -27,9 +23,7 @@ module Wh2cwe
           {
             delete_request: {
               key: {
-                "ARN" => {
-                  s: arn,
-                },
+                "ARN" => arn,
               },
             },
           }

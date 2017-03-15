@@ -45,45 +45,31 @@ module Wh2cwe
                 {
                   put_request: {
                     item: {
-                      "ARN" => {
-                        s: "arn:aws:events:ap-northeast-1:012345678901:rule/scheduler-production-send_awesome_mail",
-                      },
-                      "InvokedAt" => {
-                        s: "0",
-                      },
+                      "ARN" => "arn:aws:events:ap-northeast-1:012345678901:rule/scheduler-production-send_awesome_mail",
+                      "InvokedAt" => "0",
                     },
                   },
                 },
                 {
                   put_request: {
                     item: {
-                      "ARN" => {
-                        s: "arn:aws:events:ap-northeast-1:012345678901:rule/scheduler-production-update_elasticsearch",
-                      },
-                      "InvokedAt" => {
-                        s: "0",
-                      },
+                      "ARN" => "arn:aws:events:ap-northeast-1:012345678901:rule/scheduler-production-update_elasticsearch",
+                      "InvokedAt" => "0",
                     },
                   },
                 },
                 {
                   put_request: {
                     item: {
-                      "ARN" => {
-                        s: "arn:aws:events:ap-northeast-1:012345678901:rule/scheduler-production-create_new_companies",
-                      },
-                      "InvokedAt" => {
-                        s: "0",
-                      },
+                      "ARN" => "arn:aws:events:ap-northeast-1:012345678901:rule/scheduler-production-create_new_companies",
+                      "InvokedAt" => "0",
                     },
                   },
                 },
                 {
                   delete_request: {
                     key: {
-                      "ARN" => {
-                        s: "arn:aws:events:ap-northeast-1:012345678901:rule/scheduler-production-send_greeting_notification",
-                      },
+                      "ARN" => "arn:aws:events:ap-northeast-1:012345678901:rule/scheduler-production-send_greeting_notification",
                     },
                   },
                 },
