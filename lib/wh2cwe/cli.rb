@@ -33,10 +33,6 @@ module Wh2cwe
       private
 
       def run(options)
-        cwe = Wh2cwe::AWS::CloudWatchEvents.new
-        dynamodb = Wh2cwe::AWS::DynamoDB.new
-        lambda = Wh2cwe::AWS::Lambda.new
-
         jobs = Wh2cwe::Parser.parse(options[:filename], options[:prefix], options[:regexp])
         function_arn = lambda.retrieve_function_arn(options[:function])
 
@@ -81,6 +77,18 @@ module Wh2cwe
         end
 
         return add_jobs, delete_jobs
+      end
+
+      def cwe
+        @cwe ||= Wh2cwe::AWS::CloudWatchEvents.new
+      end
+
+      def dynamodb
+        @dynamodb ||= Wh2cwe::AWS::DynamoDB.new
+      end
+
+      def lambda
+        @lambda ||= Wh2cwe::AWS::Lambda.new
       end
     end
   end
