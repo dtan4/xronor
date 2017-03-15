@@ -48,7 +48,7 @@ module Wh2cwe
                       "ARN" => {
                         s: "arn:aws:events:ap-northeast-1:012345678901:rule/scheduler-production-send_awesome_mail",
                       },
-                      "Timestamp" => {
+                      "InvokedAt" => {
                         s: "0",
                       },
                     },
@@ -60,7 +60,7 @@ module Wh2cwe
                       "ARN" => {
                         s: "arn:aws:events:ap-northeast-1:012345678901:rule/scheduler-production-update_elasticsearch",
                       },
-                      "Timestamp" => {
+                      "InvokedAt" => {
                         s: "0",
                       },
                     },
@@ -72,7 +72,7 @@ module Wh2cwe
                       "ARN" => {
                         s: "arn:aws:events:ap-northeast-1:012345678901:rule/scheduler-production-create_new_companies",
                       },
-                      "Timestamp" => {
+                      "InvokedAt" => {
                         s: "0",
                       },
                     },

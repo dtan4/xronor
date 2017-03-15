@@ -15,7 +15,7 @@ module Wh2cwe
                 "ARN" => {
                   s: arn,
                 },
-                "Timestamp" => {
+                "InvokedAt" => {
                   s: "0",
                 },
               },
