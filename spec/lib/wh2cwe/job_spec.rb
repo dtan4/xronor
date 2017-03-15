@@ -10,8 +10,16 @@ module Wh2cwe
       "/bin/bash -l -c 'bundle exec rake create_new_companies RAILS_ENV=production'"
     end
 
+    let(:prefix) do
+      "scheduler-"
+    end
+
+    let(:regexp) do
+      "regexp"
+    end
+
     let(:job) do
-      Job.new(cron, command)
+      Job.new(cron, command, prefix, regexp)
     end
 
     describe "#cloud_watch_cron" do
@@ -53,7 +61,7 @@ module Wh2cwe
         end
 
         it "should calculate job name using the given regexp" do
-          expect(job.name(prefix, regexp)).to eq "scheduler-create_new_companies"
+          expect(job.name).to eq "scheduler-create_new_companies"
         end
       end
 
@@ -63,7 +71,7 @@ module Wh2cwe
         end
 
         it "should return empty string" do
-          expect(job.name(prefix, regexp)).to eq "scheduler-"
+          expect(job.name).to eq "scheduler-"
         end
       end
     end

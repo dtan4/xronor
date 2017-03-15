@@ -37,15 +37,15 @@ module Wh2cwe
         dynamodb = Wh2cwe::AWS::DynamoDB.new
         lambda = Wh2cwe::AWS::Lambda.new
 
-        jobs = Wh2cwe::Parser.parse(options[:filename])
+        jobs = Wh2cwe::Parser.parse(options[:filename], options[:prefix], options[:regexp])
         function_arn = lambda.retrieve_function_arn(options[:function])
 
         rule_arns = jobs.map do |job|
           if options[:dry_run]
-            puts "[DRYRUN] #{job.name(options[:prefix], options[:regexp])} will be registered to CloudWatch Events"
+            puts "[DRYRUN] #{job.name} will be registered to CloudWatch Events"
           else
             arn = cwe.register_job(
-              job.name(options[:prefix], options[:regexp]),
+              job.name,
               job.cloud_watch_cron,
               options[:cluster],
               options[:task_definition],
