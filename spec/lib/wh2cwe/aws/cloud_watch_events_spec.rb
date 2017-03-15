@@ -107,6 +107,7 @@ module Wh2cwe
             name: "scheduler-production-create_new_companies",
             schedule: "cron(10 0 * * ? *)",
             command: "/bin/bash -l -c 'bundle exec rake create_new_companies RAILS_ENV=production'",
+            rule_name: "scheduler-production-create_new_companies-32343ed63f077",
           )
         end
 
@@ -137,7 +138,7 @@ module Wh2cwe
 
         it "should return rule ARN" do
           allow(client).to receive(:put_rule).with({
-            name: "scheduler-production-create_new_companies",
+            name: "scheduler-production-create_new_companies-32343ed63f077",
             schedule_expression: "cron(10 0 * * ? *)",
           }).and_return(double("response", rule_arn: "arn:aws:events:ap-northeast-1:012345678901:rule/scheduler-production-create_new_companies"))
           allow(client).to receive(:put_targets).with({
