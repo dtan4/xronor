@@ -15,9 +15,9 @@ module Wh2cwe
         @client.list_rules.rules.select { |rule| rule.name.start_with?(prefix) }.map(&:to_h)
       end
 
-      def register_job(name, cron, cluster, task_definition, container, command, target_function_arn)
-        rule_arn = put_rule(name, cron)
-        put_target(name, cluster, task_definition, container, command, target_function_arn)
+      def register_job(job, cluster, task_definition, container, target_function_arn)
+        rule_arn = put_rule(job.name, job.cloud_watch_cron)
+        put_target(job.name, cluster, task_definition, container, job.command, target_function_arn)
         rule_arn
       end
 

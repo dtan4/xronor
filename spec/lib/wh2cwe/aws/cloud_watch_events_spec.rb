@@ -16,7 +16,7 @@ module Wh2cwe
           double("job",
             name: "scheduler-production-create_new_companies",
             cron: "10 0 * * *",
-            command: "/bin/bash -l -c 'bundle exec rake create_new_companies RAILS_ENV=production'"
+            command: "/bin/bash -l -c 'bundle exec rake create_new_companies RAILS_ENV=production'",
           )
         end
 
@@ -132,12 +132,13 @@ module Wh2cwe
       end
 
       describe "#register_job" do
-        let(:name) do
-          "scheduler-production-create_new_companies"
-        end
-
-        let(:cron) do
-          "10 0 * * ? *"
+        let(:job) do
+          double("job",
+            name: "scheduler-production-create_new_companies",
+            cron: "10 0 * * *",
+            command: "/bin/bash -l -c 'bundle exec rake create_new_companies RAILS_ENV=production'",
+            cloud_watch_cron: "10 0 * * ? *",
+          )
         end
 
         let(:cluster) do
@@ -150,10 +151,6 @@ module Wh2cwe
 
         let(:container) do
           "scheduler-app"
-        end
-
-        let(:command) do
-          "/bin/bash -l -c 'bundle exec rake create_new_companies RAILS_ENV=production'"
         end
 
         let(:target_function_arn) do
@@ -191,7 +188,7 @@ module Wh2cwe
             ],
           })
           allow(cwe).to receive(:generate_id).and_return("id")
-          expect(cwe.register_job(name, cron, cluster, task_definition, container, command, target_function_arn)).to eq "arn:aws:events:ap-northeast-1:012345678901:rule/scheduler-production-create_new_companies"
+          expect(cwe.register_job(job, cluster, task_definition, container, target_function_arn)).to eq "arn:aws:events:ap-northeast-1:012345678901:rule/scheduler-production-create_new_companies"
         end
       end
     end
