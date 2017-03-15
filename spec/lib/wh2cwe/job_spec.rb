@@ -43,13 +43,17 @@ module Wh2cwe
     end
 
     describe "#name" do
+      let(:prefix) do
+        "scheduler-"
+      end
+
       context "when valid regexp is given" do
         let(:regexp) do
           'bundle exec rake (\w+) RAILS_ENV=.*\z'
         end
 
         it "should calculate job name using the given regexp" do
-          expect(job.name(regexp)).to eq "create_new_companies"
+          expect(job.name(prefix, regexp)).to eq "scheduler-create_new_companies"
         end
       end
 
@@ -59,7 +63,7 @@ module Wh2cwe
         end
 
         it "should return empty string" do
-          expect(job.name(regexp)).to eq ""
+          expect(job.name(prefix, regexp)).to eq "scheduler-"
         end
       end
     end

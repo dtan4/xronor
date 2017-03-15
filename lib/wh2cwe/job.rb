@@ -17,9 +17,9 @@ module Wh2cwe
       cron_fields.join(" ")
     end
 
-    def name(regexp)
+    def name(prefix, regexp)
       matched = Regexp.new(regexp).match(@command)
-      matched ? matched[1] : ""
+      "#{prefix}#{matched ? matched[1] : ""}"
     end
   end
 end
