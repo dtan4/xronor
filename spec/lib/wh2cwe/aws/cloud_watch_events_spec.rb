@@ -11,6 +11,91 @@ module Wh2cwe
         described_class.new(client: client)
       end
 
+      describe "#list_jobs" do
+        let(:rules) do
+          [
+            {
+              name: "scheduler-production-create_new_companies",
+              arn: "arn:aws:events:ap-northeast-1:012345678901:rule/scheduler-production-create_new_companies",
+              state: "ENABLED",
+              description: "",
+              schedule_expression: "cron(30 0 * * ? *)",
+            },
+            {
+              name: "scheduler-qa-create_new_companies",
+              arn: "arn:aws:events:ap-northeast-1:012345678901:rule/scheduler-qa-create_new_companies",
+              state: "ENABLED",
+              description: "",
+              schedule_expression: "cron(0 * * * ? *)",
+            },
+            {
+              name: "CheckEC2ScheduledEvents",
+              arn: "arn:aws:events:ap-northeast-1:012345678901:rule/CheckEC2ScheduledEvents",
+              state: "ENABLED",
+              description: "Check EC2 Scheduled Events at 09:30 JST",
+              schedule_expression: "cron(30 0 * * ? *)",
+            },
+          ]
+        end
+
+        before do
+          client.stub_responses(:list_rules, rules: rules)
+        end
+
+        context "when no prefix is given" do
+          it "should return all rules" do
+            expect(cwe.list_jobs).to eq([
+              {
+                name: "scheduler-production-create_new_companies",
+                arn: "arn:aws:events:ap-northeast-1:012345678901:rule/scheduler-production-create_new_companies",
+                state: "ENABLED",
+                description: "",
+                schedule_expression: "cron(30 0 * * ? *)",
+              },
+              {
+                name: "scheduler-qa-create_new_companies",
+                arn: "arn:aws:events:ap-northeast-1:012345678901:rule/scheduler-qa-create_new_companies",
+                state: "ENABLED",
+                description: "",
+                schedule_expression: "cron(0 * * * ? *)",
+              },
+              {
+                name: "CheckEC2ScheduledEvents",
+                arn: "arn:aws:events:ap-northeast-1:012345678901:rule/CheckEC2ScheduledEvents",
+                state: "ENABLED",
+                description: "Check EC2 Scheduled Events at 09:30 JST",
+                schedule_expression: "cron(30 0 * * ? *)",
+              },
+            ])
+          end
+        end
+
+        context "when prefix is given" do
+          let(:prefix) do
+            "scheduler-"
+          end
+
+          it "should return all rules" do
+            expect(cwe.list_jobs(prefix)).to eq([
+              {
+                name: "scheduler-production-create_new_companies",
+                arn: "arn:aws:events:ap-northeast-1:012345678901:rule/scheduler-production-create_new_companies",
+                state: "ENABLED",
+                description: "",
+                schedule_expression: "cron(30 0 * * ? *)",
+              },
+              {
+                name: "scheduler-qa-create_new_companies",
+                arn: "arn:aws:events:ap-northeast-1:012345678901:rule/scheduler-qa-create_new_companies",
+                state: "ENABLED",
+                description: "",
+                schedule_expression: "cron(0 * * * ? *)",
+              },
+            ])
+          end
+        end
+      end
+
       describe "#register_job" do
         let(:name) do
           "scheduler-production-create_new_companies"

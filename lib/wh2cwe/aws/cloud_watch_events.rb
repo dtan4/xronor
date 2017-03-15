@@ -5,6 +5,10 @@ module Wh2cwe
         @client = client
       end
 
+      def list_jobs(prefix = "")
+        @client.list_rules.rules.select { |rule| rule.name.start_with?(prefix) }.map(&:to_h)
+      end
+
       def register_job(name, cron, cluster, task_definition, container, command, target_function_arn)
         rule_arn = put_rule(name, cron)
         put_target(name, cluster, task_definition, container, command, target_function_arn)
