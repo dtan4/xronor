@@ -63,5 +63,19 @@ module Wh2cwe
         end
       end
     end
+
+    describe "#hashcode" do
+      let(:job) do
+        described_class.new(
+          "scheduler-production-create_new_companies",
+          "cron(10 0 * * ? *)",
+          "/bin/bash -l -c 'bundle exec rake create_new_companies RAILS_ENV=production'",
+        )
+      end
+
+      it "should calculate hashcode" do
+        expect(job.hashcode).to eq "32343ed63f077"
+      end
+    end
   end
 end

@@ -1,4 +1,5 @@
 require "aws-sdk-core"
+require "openssl"
 require "optparse"
 require "shellwords"
 require "whenever"
