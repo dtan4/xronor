@@ -12,7 +12,7 @@ module Wh2cwe
       end
 
       def list_jobs(prefix = "")
-        @client.list_rules.rules.select { |rule| rule.name.start_with?(prefix) }.map(&:to_h)
+        @client.list_rules.rules.select { |rule| rule.name.start_with?(prefix) }.map(&:name)
       end
 
       def register_job(job, cluster, task_definition, container, target_function_arn)

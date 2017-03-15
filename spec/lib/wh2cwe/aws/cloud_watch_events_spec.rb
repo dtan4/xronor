@@ -80,27 +80,9 @@ module Wh2cwe
         context "when no prefix is given" do
           it "should return all rules" do
             expect(cwe.list_jobs).to eq([
-              {
-                name: "scheduler-production-create_new_companies",
-                arn: "arn:aws:events:ap-northeast-1:012345678901:rule/scheduler-production-create_new_companies",
-                state: "ENABLED",
-                description: "",
-                schedule_expression: "cron(30 0 * * ? *)",
-              },
-              {
-                name: "scheduler-qa-create_new_companies",
-                arn: "arn:aws:events:ap-northeast-1:012345678901:rule/scheduler-qa-create_new_companies",
-                state: "ENABLED",
-                description: "",
-                schedule_expression: "cron(0 * * * ? *)",
-              },
-              {
-                name: "CheckEC2ScheduledEvents",
-                arn: "arn:aws:events:ap-northeast-1:012345678901:rule/CheckEC2ScheduledEvents",
-                state: "ENABLED",
-                description: "Check EC2 Scheduled Events at 09:30 JST",
-                schedule_expression: "cron(30 0 * * ? *)",
-              },
+              "scheduler-production-create_new_companies",
+              "scheduler-qa-create_new_companies",
+              "CheckEC2ScheduledEvents",
             ])
           end
         end
@@ -112,20 +94,8 @@ module Wh2cwe
 
           it "should return all rules" do
             expect(cwe.list_jobs(prefix)).to eq([
-              {
-                name: "scheduler-production-create_new_companies",
-                arn: "arn:aws:events:ap-northeast-1:012345678901:rule/scheduler-production-create_new_companies",
-                state: "ENABLED",
-                description: "",
-                schedule_expression: "cron(30 0 * * ? *)",
-              },
-              {
-                name: "scheduler-qa-create_new_companies",
-                arn: "arn:aws:events:ap-northeast-1:012345678901:rule/scheduler-qa-create_new_companies",
-                state: "ENABLED",
-                description: "",
-                schedule_expression: "cron(0 * * * ? *)",
-              },
+              "scheduler-production-create_new_companies",
+              "scheduler-qa-create_new_companies",
             ])
           end
         end
