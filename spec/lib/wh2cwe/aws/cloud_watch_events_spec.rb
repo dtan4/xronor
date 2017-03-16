@@ -142,7 +142,7 @@ module Wh2cwe
             schedule_expression: "cron(10 0 * * ? *)",
           }).and_return(double("response", rule_arn: "arn:aws:events:ap-northeast-1:012345678901:rule/scheduler-production-create_new_companies"))
           allow(client).to receive(:put_targets).with({
-            rule: "scheduler-production-create_new_companies",
+            rule: "scheduler-production-create_new_companies-32343ed63f077",
             targets: [
               {
                 id: "id",
