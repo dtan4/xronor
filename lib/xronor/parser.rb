@@ -1,4 +1,4 @@
-module Wh2cwe
+module Xronor
   class Parser
     def self.parse(filename, prefix, regexp)
       Whenever.cron(file: filename).split("\n").delete_if { |line| line == "" }.map do |line|

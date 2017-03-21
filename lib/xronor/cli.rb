@@ -1,4 +1,4 @@
-module Wh2cwe
+module Xronor
   class CLI
     class << self
       def start(argv)
@@ -33,7 +33,7 @@ module Wh2cwe
       private
 
       def run(options)
-        jobs = Wh2cwe::Parser.parse(options[:filename], options[:prefix], options[:regexp])
+        jobs = Xronor::Parser.parse(options[:filename], options[:prefix], options[:regexp])
         function_arn = lambda.retrieve_function_arn(options[:function])
 
         current_jobs = cwe.list_jobs(options[:prefix])
@@ -80,15 +80,15 @@ module Wh2cwe
       end
 
       def cwe
-        @cwe ||= Wh2cwe::AWS::CloudWatchEvents.new
+        @cwe ||= Xronor::AWS::CloudWatchEvents.new
       end
 
       def dynamodb
-        @dynamodb ||= Wh2cwe::AWS::DynamoDB.new
+        @dynamodb ||= Xronor::AWS::DynamoDB.new
       end
 
       def lambda
-        @lambda ||= Wh2cwe::AWS::Lambda.new
+        @lambda ||= Xronor::AWS::Lambda.new
       end
     end
   end

@@ -1,4 +1,4 @@
-module Wh2cwe
+module Xronor
   class Job
     DOM_INDEX = 2
     DOW_INDEX = 4

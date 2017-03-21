@@ -1,6 +1,6 @@
 require "spec_helper"
 
-module Wh2cwe
+module Xronor
   module AWS
     describe CloudWatchEvents do
       let(:client) do

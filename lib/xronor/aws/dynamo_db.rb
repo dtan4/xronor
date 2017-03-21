@@ -1,4 +1,4 @@
-module Wh2cwe
+module Xronor
   module AWS
     class DynamoDB
       BATCH_WRITE_ITEM_MAX = 25

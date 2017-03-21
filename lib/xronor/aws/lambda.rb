@@ -1,4 +1,4 @@
-module Wh2cwe
+module Xronor
   module AWS
     class Lambda
       def initialize(client: Aws::Lambda::Client.new)

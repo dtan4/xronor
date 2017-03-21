@@ -1,6 +1,6 @@
 source 'https://rubygems.org'
 
-# Specify your gem's dependencies in wh2cwe.gemspec
+# Specify your gem's dependencies in xronor.gemspec
 gemspec
 
 group :development do

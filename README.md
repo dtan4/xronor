@@ -1,4 +1,4 @@
-# Wh2cwe
+# Xronor
 
 Convert Whenever DSL to CloudWatch Events Schedule Rule to invoke job on ECS
 
@@ -9,7 +9,7 @@ TODO: architecture overview
 Add this line to your application's Gemfile:
 
 ```ruby
-gem 'wh2cwe'
+gem 'xronor'
 ```
 
 And then execute:
@@ -18,7 +18,7 @@ And then execute:
 
 Or install it yourself as:
 
-    $ gem install wh2cwe
+    $ gem install xronor
 
 ## Usage
 
@@ -32,7 +32,7 @@ To install this gem onto your local machine, run `bundle exec rake install`. To 
 
 ## Contributing
 
-Bug reports and pull requests are welcome on GitHub at https://github.com/dtan4/wh2cwe.
+Bug reports and pull requests are welcome on GitHub at https://github.com/dtan4/xronor.
 
 ## License
 

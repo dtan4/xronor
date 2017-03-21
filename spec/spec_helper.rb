@@ -1,5 +1,5 @@
 require "bundler/setup"
-require "wh2cwe"
+require "xronor"
 
 RSpec.configure do |config|
   # Enable flags like --only-failures and --next-failure

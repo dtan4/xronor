@@ -1,6 +1,6 @@
 require "spec_helper"
 
-module Wh2cwe
+module Xronor
   module AWS
     describe DynamoDB do
       let(:client) do

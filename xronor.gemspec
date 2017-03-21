@@ -1,17 +1,17 @@
 # coding: utf-8
 lib = File.expand_path('../lib', __FILE__)
 $LOAD_PATH.unshift(lib) unless $LOAD_PATH.include?(lib)
-require 'wh2cwe/version'
+require 'xronor/version'
 
 Gem::Specification.new do |spec|
-  spec.name          = "wh2cwe"
-  spec.version       = Wh2cwe::VERSION
+  spec.name          = "xronor"
+  spec.version       = Xronor::VERSION
   spec.authors       = ["Daisuke Fujita"]
   spec.email         = ["dtanshi45@gmail.com"]
 
   spec.summary       = %q{Whenever DSL -> CloudWatch Events Schedule Rule & ECS Task Parameter}
   spec.description   = %q{Convert Whenever DSL to CloudWatch Events Schedule Rule to invoke job on ECS}
-  spec.homepage      = "https://github.com/dtan4/wh2cwe"
+  spec.homepage      = "https://github.com/dtan4/xronor"
   spec.license       = "MIT"
 
   # Prevent pushing this gem to RubyGems.org. To allow pushes either set the 'allowed_push_host'

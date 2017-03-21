@@ -1,6 +1,6 @@
 require "spec_helper"
 
-module Wh2cwe
+module Xronor
   describe Job do
     describe ".from_crontab" do
       let(:cron) do

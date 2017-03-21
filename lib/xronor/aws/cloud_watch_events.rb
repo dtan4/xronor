@@ -1,4 +1,4 @@
-module Wh2cwe
+module Xronor
   module AWS
     class CloudWatchEvents
       def initialize(client: Aws::CloudWatchEvents::Client.new)
