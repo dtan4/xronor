@@ -8,7 +8,7 @@ module Xronor
         name = name_from_command(command, prefix, regexp)
         schedule = cloud_watch_schedule(cron)
 
-        self.new(name, schedule, command)
+        self.new(name, "", schedule, command)
       end
 
       private
@@ -26,8 +26,9 @@ module Xronor
       end
     end
 
-    def initialize(name, schedule, command)
+    def initialize(name, description, schedule, command)
       @name = name
+      @description = description
       @schedule = schedule
       @command = command
     end
