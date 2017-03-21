@@ -1,5 +1,9 @@
 module Xronor
   class DSL
+    DEFAULT_PREFIX = "scheduler-"
+    DEFAULT_TIMEZONE = "UTC"
+    DEFAULT_CRON_TIMEZONE = "UTC"
+
     class << self
       def eval(body)
         self.new(body)
@@ -9,14 +13,18 @@ module Xronor
     def initialize(body)
       @result = OpenStruct.new(
         jobs: [],
-        options: {},
+        options: {
+          prefix: DEFAULT_PREFIX,
+          timezone: DEFAULT_TIMEZONE,
+          cron_timezone: DEFAULT_CRON_TIMEZONE,
+        },
       )
 
       instance_eval(body)
     end
 
     def default(&block)
-      @result.options = Xronor::DSL::Default.new(&block).result.to_h
+      @result.options.merge!(Xronor::DSL::Default.new(&block).result.to_h)
     end
 
     def every(frequency, options = {}, &block)
