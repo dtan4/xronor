@@ -20,6 +20,20 @@ module Xronor
           }
         end
 
+        context "when timezone is not changed" do
+          let(:options) do
+            {
+              at: "10:30 am",
+              timezone: "UTC",
+              cron_timezone: "UTC",
+            }
+          end
+
+          it "should convert to cron expression" do
+            expect(converter.convert).to eq "30 10 * * *"
+          end
+        end
+
         context "when frequency is :day" do
           let(:frequency) do
             :day
