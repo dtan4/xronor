@@ -1,3 +1,16 @@
+require "simplecov"
+
+SimpleCov.start
+
+require "codecov"
+
+if ENV["CI"]
+  SimpleCov.formatters = [
+    SimpleCov::Formatter::HTMLFormatter,
+    SimpleCov::Formatter::Codecov,
+  ]
+end
+
 require "bundler/setup"
 require "xronor"
 
