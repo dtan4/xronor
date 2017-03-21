@@ -1,6 +1,8 @@
 module Xronor
   class DSL
     class Job
+      include Xronor::DSL::Checker
+
       def initialize(frequency, options, &block)
         @frequency = frequency
         @options = options
@@ -21,6 +23,7 @@ module Xronor
       end
 
       def result
+        required(:name, @result.name)
         @result
       end
     end
