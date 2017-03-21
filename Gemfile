@@ -7,3 +7,7 @@ group :development do
   gem "guard", "~> 2.14", require: false
   gem "guard-rspec", "~> 4.7", require: false
 end
+
+group :test do
+  gem "codecov", "~> 0.1", require: false
+end
