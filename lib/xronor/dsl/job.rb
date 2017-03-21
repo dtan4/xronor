@@ -6,9 +6,20 @@ module Xronor
       def initialize(frequency, options, &block)
         @frequency = frequency
         @options = options
+
+        schedule = case frequency
+                   when String # cron expression
+                     frequency
+                   when Symbol
+                     ""
+                   else
+                     raise ArgumentError, "Invalid frequency"
+                   end
+
         @result = OpenStruct.new(
           description: "",
           name: "",
+          schedule: schedule,
         )
 
         instance_eval(&block)
