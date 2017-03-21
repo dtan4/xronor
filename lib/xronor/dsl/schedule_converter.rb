@@ -19,36 +19,44 @@ module Xronor
         cron_at, dow_diff = parse_and_convert_time
 
         case @frequency
-        when *WEEKDAYS
-          dow = WEEKDAYS.index(@frequency)
-          dow += dow_diff
-
-          case dow
-          when -1 # Sunday -> Saturday
-            dow = 6
-          when 7  # Saturday -> Sunday
-            dow = 0
-          end
-
-          [
-            cron_at.min,
-            cron_at.hour,
-            "*",
-            "*",
-            dow,
-          ].join(" ")
-        when :day
-          [
-            cron_at.min,
-            cron_at.hour,
-            "*",
-            "*",
-            "*",
-          ].join(" ")
+        when *WEEKDAYS # :sunday, :monday, ..., :saturday
+          cron_weekly(cron_at, dow_diff)
+        when :day      # :day
+          cron_daily(cron_at)
         end
       end
 
       private
+
+      def cron_daily(cron_at)
+        [
+          cron_at.min,
+          cron_at.hour,
+          "*",
+          "*",
+          "*",
+        ].join(" ")
+      end
+
+      def cron_weekly(cron_at, dow_diff)
+        dow = WEEKDAYS.index(@frequency)
+        dow += dow_diff
+
+        case dow
+        when -1 # Sunday -> Saturday
+          dow = 6
+        when 7  # Saturday -> Sunday
+          dow = 0
+        end
+
+        [
+          cron_at.min,
+          cron_at.hour,
+          "*",
+          "*",
+          dow,
+        ].join(" ")
+      end
 
       def parse_and_convert_time
         original_time_class = Chronic.time_class
