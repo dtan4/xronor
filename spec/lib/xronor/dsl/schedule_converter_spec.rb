@@ -29,6 +29,16 @@ module Xronor
             expect(converter.convert).to eq "30 1 * * *"
           end
         end
+
+        context "when frequency is weekday" do
+          let(:frequency) do
+            :wednesday
+          end
+
+          it "should convert to cron expression" do
+            expect(converter.convert).to eq "30 1 * * 3"
+          end
+        end
       end
     end
   end

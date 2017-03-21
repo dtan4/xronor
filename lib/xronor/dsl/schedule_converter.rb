@@ -2,6 +2,7 @@ module Xronor
   class DSL
     class ScheduleConverter
       KEYWORDS = %i(yearly annually monthly weekly daily hourly)
+      WEEKDAYS = %i(sunday monday tuesday wednesday thursday saturday)
 
       class << self
         def convert(frequency, options)
@@ -18,13 +19,23 @@ module Xronor
         cron_at = parse_and_convert_time
 
         case @frequency
+        when *WEEKDAYS
+          dow = WEEKDAYS.index(@frequency)
+
+          [
+            cron_at.min,
+            cron_at.hour,
+            "*",
+            "*",
+            dow,
+          ].join(" ")
         when :day
           [
             cron_at.min,
             cron_at.hour,
             "*",
             "*",
-            "*"
+            "*",
           ].join(" ")
         end
       end
