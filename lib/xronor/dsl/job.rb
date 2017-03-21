@@ -14,12 +14,10 @@ module Xronor
         instance_eval(&block)
       end
 
-      def description(value)
-        @result.description = value
-      end
-
-      def name(value)
-        @result.name = value
+      %i(description name).each do |key|
+        define_method(key) do |arg|
+          @result.send("#{key}=", arg)
+        end
       end
 
       def result
