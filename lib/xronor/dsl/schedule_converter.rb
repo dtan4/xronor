@@ -2,7 +2,7 @@ module Xronor
   class DSL
     class ScheduleConverter
       KEYWORDS = %i(yearly annually monthly weekly daily hourly)
-      WEEKDAYS = %i(sunday monday tuesday wednesday thursday saturday)
+      WEEKDAYS = %i(sunday monday tuesday wednesday thursday friday saturday)
 
       class << self
         def convert(frequency, options)
@@ -16,11 +16,19 @@ module Xronor
       end
 
       def convert
-        cron_at = parse_and_convert_time
+        cron_at, dow_diff = parse_and_convert_time
 
         case @frequency
         when *WEEKDAYS
           dow = WEEKDAYS.index(@frequency)
+          dow += dow_diff
+
+          case dow
+          when -1 # Sunday -> Saturday
+            dow = 6
+          when 7  # Saturday -> Sunday
+            dow = 0
+          end
 
           [
             cron_at.min,
@@ -50,7 +58,7 @@ module Xronor
         cron_at = local_at.in_time_zone(@options[:cron_timezone])
         Chronic.time_class = original_time_class
 
-        cron_at
+        return cron_at, (cron_at.wday - local_at.wday)
       end
     end
   end
