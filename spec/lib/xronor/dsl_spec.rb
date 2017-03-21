@@ -5,6 +5,12 @@ module Xronor
     describe "#result" do
       let(:body) do
         <<-BODY
+default do
+  prefix "scheduler-"
+  timezone "Asia/Tokyo"
+  cron_timezone "UTC"
+end
+
 every :day, at: "10:30 am" do
   name "Update Elasticsearch"
   description "Update Elasticsearch indices"
@@ -20,8 +26,9 @@ end
         described_class.eval(body)
       end
 
-      it "should return Job list" do
+      it "should parse DSL" do
         result = dsl.result
+        expect(result.options).to be_a Hash
         expect(result.jobs.length).to eq 2
       end
     end
