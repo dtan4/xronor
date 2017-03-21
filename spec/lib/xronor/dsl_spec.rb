@@ -9,6 +9,10 @@ every :day, at: "10:30 am" do
   name "Update Elasticsearch"
   description "Update Elasticsearch indices"
 end
+
+every "0 12 10,20 * *" do
+  name "Send reports"
+end
         BODY
       end
 
@@ -18,7 +22,7 @@ end
 
       it "should return Job list" do
         result = dsl.result
-        expect(result.jobs.length).to eq 1
+        expect(result.jobs.length).to eq 2
       end
     end
   end

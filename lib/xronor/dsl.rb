@@ -15,7 +15,7 @@ module Xronor
       instance_eval(body)
     end
 
-    def every(frequency, options, &block)
+    def every(frequency, options = {}, &block)
       @result.jobs << Xronor::DSL::Job.new(frequency, options.merge(@result.options), &block).result
     end
 
