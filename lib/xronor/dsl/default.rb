@@ -1,11 +1,13 @@
 module Xronor
   class DSL
     class Default
+      DEFAULT_TIMEZONE = "UTC"
+
       def initialize(&block)
         @result = OpenStruct.new(
-          cron_timezone: "",
+          cron_timezone: DEFAULT_TIMEZONE,
           prefix: "",
-          timezone: "",
+          timezone: DEFAULT_TIMEZONE,
         )
 
         instance_eval(&block)
