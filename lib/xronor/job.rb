@@ -10,7 +10,7 @@ module Xronor
       @command = command
     end
 
-    attr_reader :command, :name, :schedule
+    attr_reader :command, :description, :name, :schedule
 
     def cloud_watch_schedule
       cron_fields = @schedule.split(" ")

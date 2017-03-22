@@ -143,6 +143,7 @@ module Xronor
           allow(job).to receive(:cloud_watch_schedule).and_return("cron(10 0 * * ? *)")
           allow(client).to receive(:put_rule).with({
             name: "scheduler-production-create_new_companies-7a7c4f3e190d7",
+            description: "Create new companies",
             schedule_expression: "cron(10 0 * * ? *)",
           }).and_return(double("response", rule_arn: "arn:aws:events:ap-northeast-1:012345678901:rule/scheduler-production-create_new_companies"))
           allow(client).to receive(:put_targets).with({
