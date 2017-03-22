@@ -35,7 +35,7 @@ module Xronor
         function_arn = lambda.retrieve_function_arn(options[:function])
 
         current_jobs = cwe.list_jobs(options[:prefix])
-        add_jobs, _ = compare_jobs(options[:prefix], current_jobs, jobs)
+        add_jobs, delete_jobs = compare_jobs(options[:prefix], current_jobs, jobs)
 
         added_rule_arns = add_jobs.map do |job|
           if options[:dry_run]
@@ -55,9 +55,17 @@ module Xronor
         end
 
         if options[:dry_run]
-          puts "[DRYRUN] #{added_rule_arns} will be added to DynamoDB"
         else
           dynamodb.sync_rule_arns(options[:table], added_rule_arns, [])
+        end
+
+        delete_jobs.each do |job|
+          if options[:dry_run]
+            puts "[DRYRUN] #{job} will be deregistered from CloudWatch Events"
+          else
+            cwe.deregister_job(job)
+            puts "Deregistered #{job}"
+          end
         end
       end
 
