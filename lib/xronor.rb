@@ -4,6 +4,7 @@ require "chronic"
 require "openssl"
 require "optparse"
 require "shellwords"
+require "thor"
 
 require "xronor/aws/cloud_watch_events"
 require "xronor/aws/dynamo_db"
@@ -21,5 +22,5 @@ require "xronor/parser"
 require "xronor/version"
 
 module Xronor
-  DEFAULT_JOB_PREFIX = "scheduler-"
+
 end
