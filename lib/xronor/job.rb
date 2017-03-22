@@ -10,6 +10,8 @@ module Xronor
       @command = command
     end
 
+    attr_reader :command, :name, :schedule
+
     def cloud_watch_schedule
       cron_fields = @schedule.split(" ")
       cron_fields[DOW_INDEX] = "?" if cron_fields[DOM_INDEX] == "*" && cron_fields[DOW_INDEX] == "*"
@@ -19,18 +21,6 @@ module Xronor
 
     def cloud_watch_rule_name(prefix)
       "#{prefix}#{@name}-#{hashcode}"
-    end
-
-    def command
-      @command
-    end
-
-    def name
-      @name
-    end
-
-    def schedule
-      @schedule
     end
 
     private
