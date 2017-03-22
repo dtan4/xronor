@@ -3,7 +3,7 @@ require "spec_helper"
 module Xronor
   describe Job do
     let(:name) do
-      "scheduler-production-create_new_companies"
+      "production-create_new_companies"
     end
 
     let(:description) do
@@ -11,7 +11,7 @@ module Xronor
     end
 
     let(:schedule) do
-      "cron(10 0 * * ? *)"
+      "10 0 * * *"
     end
 
     let(:command) do
@@ -44,18 +44,13 @@ module Xronor
       end
     end
 
-    describe "#rule_name" do
-      let(:job) do
-        described_class.new(
-          "scheduler-production-create_new_companies",
-          "description",
-          "cron(10 0 * * ? *)",
-          "/bin/bash -l -c 'bundle exec rake create_new_companies RAILS_ENV=production'",
-        )
+    describe "#cloud_watch_rule_name" do
+      let(:prefix) do
+        "scheduler-"
       end
 
       it "should return rule name" do
-        expect(job.rule_name).to eq "scheduler-production-create_new_companies-32343ed63f077"
+        expect(job.cloud_watch_rule_name(prefix)).to eq "scheduler-production-create_new_companies-7a7c4f3e190d7"
       end
     end
   end

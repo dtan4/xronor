@@ -17,12 +17,12 @@ module Xronor
       "cron(#{cron_fields.join(" ")})"
     end
 
-    def command
-      @command
+    def cloud_watch_rule_name(prefix)
+      "#{prefix}#{@name}-#{hashcode}"
     end
 
-    def rule_name
-      "#{@name}-#{hashcode}"
+    def command
+      @command
     end
 
     def name
