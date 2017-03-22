@@ -26,13 +26,13 @@ module Xronor
               OpenStruct.new(
                 name: "Send greeting notifications",
                 description: "Send greeting notifications for all users",
-                schedule: "0 0 * * *",
+                schedule: "0 15 * * *",
                 command: "/bin/bash -l -c 'bundle exec rake send_greeting_notification RAILS_ENV=production'",
               ),
               OpenStruct.new(
                 name: "Create new companies",
                 description: nil,
-                schedule: "10 0 * * *",
+                schedule: "10 15 * * 2",
                 command: "/bin/bash -l -c 'bundle exec rake create_new_companies RAILS_ENV=production'",
               ),
               OpenStruct.new(
@@ -66,13 +66,13 @@ module Xronor
             {
               name: "Send greeting notifications",
               description: "Send greeting notifications for all users",
-              schedule: "0 0 * * *",
+              schedule: "0 15 * * *",
               command: "/bin/bash -l -c 'bundle exec rake send_greeting_notification RAILS_ENV=production'",
             },
             {
               name: "Create new companies",
               description: "Create new companies",
-              schedule: "10 0 * * *",
+              schedule: "10 15 * * 2",
               command: "/bin/bash -l -c 'bundle exec rake create_new_companies RAILS_ENV=production'",
             },
             {
@@ -108,13 +108,13 @@ module Xronor
             {
               name: "Send greeting notifications",
               description: "Send greeting notifications for all users",
-              schedule: "0 0 * * *",
+              schedule: "0 15 * * *",
               command: "/bin/bash -l -c 'bundle exec rake send_greeting_notification RAILS_ENV=production'",
             },
             {
               name: "Create new companies",
               description: "Create new companies",
-              schedule: "10 0 * * *",
+              schedule: "10 15 * * 2",
               command: "/bin/bash -l -c 'bundle exec rake create_new_companies RAILS_ENV=production'",
             },
             {
