@@ -5,10 +5,10 @@ module Xronor
         @client = client
       end
 
-      def deregister_job(job)
-        targets = @client.list_targets_by_rule(rule: job.name).targets
-        @client.remove_targets(rule: job.name, ids: targets.map(&:id))
-        @client.delete_rule(name: job.name)
+      def deregister_job(job_name)
+        targets = @client.list_targets_by_rule(rule: job_name).targets
+        @client.remove_targets(rule: job_name, ids: targets.map(&:id))
+        @client.delete_rule(name: job_name)
       end
 
       def list_jobs(prefix = "")
