@@ -23,13 +23,33 @@ module Xronor
     end
 
     describe "#cloud_watch_schedule" do
+      context "when day is specified" do
+        let(:schedule) do
+          "10 0 3 * *"
+        end
+
+        it "should convert standard cron expression to CloudWatch cron expression" do
+          expect(job.cloud_watch_schedule).to eq "cron(10 0 3 * ? *)"
+        end
+      end
+
       context "when weekday is specified" do
         let(:schedule) do
           "10 0 * * 3"
         end
 
         it "should convert standard cron expression to CloudWatch cron expression" do
-          expect(job.cloud_watch_schedule).to eq "cron(10 0 * * 3 *)"
+          expect(job.cloud_watch_schedule).to eq "cron(10 0 ? * 4 *)"
+        end
+      end
+
+      context "when both day and weekday are specified" do
+        let(:schedule) do
+          "10 0 3 * 3"
+        end
+
+        it "should convert standard cron expression to CloudWatch cron expression" do
+          expect(job.cloud_watch_schedule).to eq "cron(10 0 3 * 4 *)"
         end
       end
 

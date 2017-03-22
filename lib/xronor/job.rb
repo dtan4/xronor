@@ -14,7 +14,19 @@ module Xronor
 
     def cloud_watch_schedule
       cron_fields = @schedule.split(" ")
-      cron_fields[DOW_INDEX] = "?" if cron_fields[DOM_INDEX] == "*" && cron_fields[DOW_INDEX] == "*"
+
+      if cron_fields[DOM_INDEX] == "*" && cron_fields[DOW_INDEX] == "*"
+        cron_fields[DOW_INDEX] = "?"
+      else
+        cron_fields[DOM_INDEX] = "?" if cron_fields[DOM_INDEX] == "*"
+
+        if cron_fields[DOW_INDEX] == "*"
+          cron_fields[DOW_INDEX] = "?"
+        else
+          cron_fields[DOW_INDEX] = cron_fields[DOW_INDEX].to_i + 1
+        end
+      end
+
       cron_fields << "*" # Year
       "cron(#{cron_fields.join(" ")})"
     end
