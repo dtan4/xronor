@@ -6,7 +6,6 @@ module Xronor
           filename: "",
           prefix: DEFAULT_JOB_PREFIX,
           function: "",
-          regexp: "",
           cluster: "",
           task_definition: "",
           container: "",
@@ -17,7 +16,6 @@ module Xronor
           opts.on("-f, --filename=FILENAME", "Whenever file") { |v| options[:filename] = v }
           opts.on("--prefix=PREFIX", "Job name prefix (default: #{DEFAULT_JOB_PREFIX})") { |v| options[:prefix] = v }
           opts.on("--function=FUNCTION", "Lambda function name") { |v| options[:function] = v }
-          opts.on("--regexp=REGEXP", "Regular expression to extract job name") { |v| options[:regexp] = v }
           opts.on("--cluster=CLUSTER", "ECS cluster") { |v| options[:cluster] = v }
           opts.on("--task-definition=TASK_DEFINITION", "ECS task definition") { |v| options[:task_definition] = v }
           opts.on("--container=CONTAINER", "ECS container name") { |v| options[:container] = v }
@@ -33,7 +31,7 @@ module Xronor
       private
 
       def run(options)
-        jobs = Xronor::Parser.parse(options[:filename], options[:prefix], options[:regexp])
+        jobs = Xronor::Parser.parse(options[:filename])
         function_arn = lambda.retrieve_function_arn(options[:function])
 
         current_jobs = cwe.list_jobs(options[:prefix])

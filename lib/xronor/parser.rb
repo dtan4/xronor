@@ -1,6 +1,6 @@
 module Xronor
   class Parser
-    def self.parse(filename, prefix = nil, regexp = nil)
+    def self.parse(filename)
       body = open(filename).read
       result = Xronor::DSL.eval(body).result
 
