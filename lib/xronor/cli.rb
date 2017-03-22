@@ -2,6 +2,19 @@ module Xronor
   class CLI < Thor
     DEFAULT_JOB_PREFIX = "scheduler-"
 
+    desc "crontab SCHEDULEFILE", "Generate crontab file"
+    def crontab(filename)
+      jobs = Xronor::Parser.parse(filename)
+
+      jobs.each do |job|
+        puts <<-EOS
+# #{job.name} - #{job.description}
+#{[job.schedule, job.command].join(" ")}
+
+        EOS
+      end
+    end
+
     desc "cwa SCHEDULEFILE", "Register CloudWatch Events - Scheduler & ECS job runner"
     option :prefix, default: DEFAULT_JOB_PREFIX
     option :function, required: true
