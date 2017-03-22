@@ -3,29 +3,6 @@ module Xronor
     DOM_INDEX = 2
     DOW_INDEX = 4
 
-    class << self
-      def from_crontab(cron, command, prefix, regexp)
-        name = name_from_command(command, prefix, regexp)
-        schedule = cloud_watch_schedule(cron)
-
-        self.new(name, "", schedule, command)
-      end
-
-      private
-
-      def cloud_watch_schedule(cron)
-        cron_fields = cron.split(" ")
-        cron_fields[DOW_INDEX] = "?" if cron_fields[DOM_INDEX] == "*" && cron_fields[DOW_INDEX] == "*"
-        cron_fields << "*" # Year
-        "cron(#{cron_fields.join(" ")})"
-      end
-
-      def name_from_command(command, prefix, regexp)
-        matched = Regexp.new(regexp).match(command)
-        "#{prefix}#{matched ? matched[1] : ""}"
-      end
-    end
-
     def initialize(name, description, schedule, command)
       @name = name
       @description = description
@@ -33,26 +10,35 @@ module Xronor
       @command = command
     end
 
-    def command
-      @command
+    attr_reader :command, :description, :name, :schedule
+
+    def cloud_watch_schedule
+      cron_fields = @schedule.split(" ")
+
+      if cron_fields[DOM_INDEX] == "*" && cron_fields[DOW_INDEX] == "*"
+        cron_fields[DOW_INDEX] = "?"
+      else
+        cron_fields[DOM_INDEX] = "?" if cron_fields[DOM_INDEX] == "*"
+
+        if cron_fields[DOW_INDEX] == "*"
+          cron_fields[DOW_INDEX] = "?"
+        else
+          cron_fields[DOW_INDEX] = cron_fields[DOW_INDEX].to_i + 1
+        end
+      end
+
+      cron_fields << "*" # Year
+      "cron(#{cron_fields.join(" ")})"
     end
 
-    def rule_name
-      "#{@name}-#{hashcode}"
-    end
-
-    def name
-      @name
-    end
-
-    def schedule
-      @schedule
+    def cloud_watch_rule_name(prefix)
+      "#{prefix}#{@name}-#{hashcode}".gsub(/[^\.\-_A-Za-z0-9]/, "-").downcase
     end
 
     private
 
     def hashcode
-      OpenSSL::Digest::SHA256.hexdigest("#{@name}\t#{@schedule}\t#{@command}")[0..12]
+      @hashcode ||= OpenSSL::Digest::SHA256.hexdigest("#{@name}\t#{@description}\t#{@schedule}\t#{@command}")[0..12]
     end
   end
 end

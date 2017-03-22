@@ -2,80 +2,75 @@ require "spec_helper"
 
 module Xronor
   describe Job do
-    describe ".from_crontab" do
-      let(:cron) do
-        "10 0 * * *"
-      end
+    let(:name) do
+      "Create new companies"
+    end
 
-      let(:command) do
-        "/bin/bash -l -c 'bundle exec rake create_new_companies RAILS_ENV=production'"
-      end
+    let(:description) do
+      "description"
+    end
 
-      let(:prefix) do
-        "scheduler-"
-      end
+    let(:schedule) do
+      "10 0 * * *"
+    end
 
-      let(:regexp) do
-        ""
-      end
+    let(:command) do
+      "/bin/bash -l -c 'bundle exec rake create_new_companies RAILS_ENV=production'"
+    end
 
-      let(:job) do
-        described_class.from_crontab(cron, command, prefix, regexp)
-      end
+    let(:job) do
+      described_class.new(name, description,schedule, command)
+    end
 
-      context "when valid regexp is given" do
-        let(:regexp) do
-          'bundle exec rake (\w+) RAILS_ENV=.*\z'
+    describe "#cloud_watch_schedule" do
+      context "when day is specified" do
+        let(:schedule) do
+          "10 0 3 * *"
         end
 
-        it "should calculate job name using the given regexp" do
-          expect(job.name).to eq "scheduler-create_new_companies"
-        end
-      end
-
-      context "when invalid regexp is given" do
-        let(:regexp) do
-          '\Abundle exec rake (\w+) RAILS_ENV=.*\z'
-        end
-
-        it "should return empty string" do
-          expect(job.name).to eq "scheduler-"
+        it "should convert standard cron expression to CloudWatch cron expression" do
+          expect(job.cloud_watch_schedule).to eq "cron(10 0 3 * ? *)"
         end
       end
 
-      context "when the job will be invoked at the specific days" do
-        let(:cron) do
-          "10 0 1-3 * *"
+      context "when weekday is specified" do
+        let(:schedule) do
+          "10 0 * * 3"
         end
 
-        it "should convert to CloudWatch cron expression" do
-          expect(job.schedule).to eq "cron(10 0 1-3 * * *)"
+        it "should convert standard cron expression to CloudWatch cron expression" do
+          expect(job.cloud_watch_schedule).to eq "cron(10 0 ? * 4 *)"
         end
       end
 
-      context "when the job will be invoked at the specific weekdays" do
-        let(:cron) do
-          "10 0 * * 1-3"
+      context "when both day and weekday are specified" do
+        let(:schedule) do
+          "10 0 3 * 3"
         end
 
-        it "should convert to CloudWatch cron expression" do
-          expect(job.schedule).to eq "cron(10 0 * * 1-3 *)"
+        it "should convert standard cron expression to CloudWatch cron expression" do
+          expect(job.cloud_watch_schedule).to eq "cron(10 0 3 * 4 *)"
+        end
+      end
+
+      context "when day and weekday are not specified" do
+        let(:schedule) do
+          "10 0 * * *"
+        end
+
+        it "should convert standard cron expression to CloudWatch cron expression" do
+          expect(job.cloud_watch_schedule).to eq "cron(10 0 * * ? *)"
         end
       end
     end
 
-    describe "#rule_name" do
-      let(:job) do
-        described_class.new(
-          "scheduler-production-create_new_companies",
-          "description",
-          "cron(10 0 * * ? *)",
-          "/bin/bash -l -c 'bundle exec rake create_new_companies RAILS_ENV=production'",
-        )
+    describe "#cloud_watch_rule_name" do
+      let(:prefix) do
+        "scheduler-"
       end
 
       it "should return rule name" do
-        expect(job.rule_name).to eq "scheduler-production-create_new_companies-32343ed63f077"
+        expect(job.cloud_watch_rule_name(prefix)).to eq "scheduler-create-new-companies-bb48ff2c5fe6e"
       end
     end
   end

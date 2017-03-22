@@ -6,7 +6,6 @@ module Xronor
           filename: "",
           prefix: DEFAULT_JOB_PREFIX,
           function: "",
-          regexp: "",
           cluster: "",
           task_definition: "",
           container: "",
@@ -17,7 +16,6 @@ module Xronor
           opts.on("-f, --filename=FILENAME", "Whenever file") { |v| options[:filename] = v }
           opts.on("--prefix=PREFIX", "Job name prefix (default: #{DEFAULT_JOB_PREFIX})") { |v| options[:prefix] = v }
           opts.on("--function=FUNCTION", "Lambda function name") { |v| options[:function] = v }
-          opts.on("--regexp=REGEXP", "Regular expression to extract job name") { |v| options[:regexp] = v }
           opts.on("--cluster=CLUSTER", "ECS cluster") { |v| options[:cluster] = v }
           opts.on("--task-definition=TASK_DEFINITION", "ECS task definition") { |v| options[:task_definition] = v }
           opts.on("--container=CONTAINER", "ECS container name") { |v| options[:container] = v }
@@ -33,11 +31,11 @@ module Xronor
       private
 
       def run(options)
-        jobs = Xronor::Parser.parse(options[:filename], options[:prefix], options[:regexp])
+        jobs = Xronor::Parser.parse(options[:filename])
         function_arn = lambda.retrieve_function_arn(options[:function])
 
         current_jobs = cwe.list_jobs(options[:prefix])
-        add_jobs, _ = compare_jobs(current_jobs, jobs)
+        add_jobs, _ = compare_jobs(options[:prefix], current_jobs, jobs)
 
         added_rule_arns = add_jobs.map do |job|
           if options[:dry_run]
@@ -45,6 +43,7 @@ module Xronor
           else
             arn = cwe.register_job(
               job,
+              options[:prefix],
               options[:cluster],
               options[:task_definition],
               options[:container],
@@ -64,12 +63,14 @@ module Xronor
 
       private
 
-      def compare_jobs(current_jobs, next_jobs)
+      def compare_jobs(prefix, current_jobs, next_jobs)
         add_jobs, delete_jobs = [], []
-        next_job_names = next_jobs.map(&:rule_name)
+        next_job_names = next_jobs.map do |job|
+          job.cloud_watch_rule_name(prefix)
+        end
 
         next_jobs.each do |job|
-          add_jobs << job unless current_jobs.include?(job.rule_name)
+          add_jobs << job unless current_jobs.include?(job.cloud_watch_rule_name(prefix))
         end
 
         current_jobs.each do |job|
