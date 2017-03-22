@@ -1,7 +1,6 @@
 module Xronor
   class DSL
     class ScheduleConverter
-      KEYWORDS = %i(yearly annually monthly weekly daily hourly)
       WEEKDAYS = %i(sunday monday tuesday wednesday thursday friday saturday)
 
       class << self
