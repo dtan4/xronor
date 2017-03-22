@@ -10,10 +10,10 @@ module Xronor
         schedule = case frequency
                    when String # cron expression
                      frequency
-                   when Symbol
-                     ""
+                   when Symbol, Numeric # DSL (:hour, 1.min, 1.hour, ...)
+                     Xronor::DSL::ScheduleConverter.convert(frequency, options)
                    else
-                     raise ArgumentError, "Invalid frequency"
+                     raise ArgumentError, "Invalid frequency #{frequency}"
                    end
 
         @result = OpenStruct.new(

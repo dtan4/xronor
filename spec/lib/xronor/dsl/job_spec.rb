@@ -64,11 +64,15 @@ module Xronor
             }
           end
 
+          before do
+            allow(Xronor::DSL::ScheduleConverter).to receive(:convert).with(:day, { at: "10:30 am" }).and_return("30 1 * * *")
+          end
+
           it "should parse Job DSL" do
             result = job.result
             expect(result.description).to eq "Update Elasticsearch indices"
             expect(result.name).to eq "Update Elasticsearch indices"
-            expect(result.schedule).to eq ""
+            expect(result.schedule).to eq "30 1 * * *"
           end
         end
 
