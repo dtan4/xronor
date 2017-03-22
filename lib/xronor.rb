@@ -4,7 +4,6 @@ require "chronic"
 require "openssl"
 require "optparse"
 require "shellwords"
-require "whenever"
 
 require "xronor/aws/cloud_watch_events"
 require "xronor/aws/dynamo_db"
