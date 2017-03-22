@@ -17,7 +17,7 @@ module Xronor
                    end
 
         @result = OpenStruct.new(
-          description: "",
+          description: nil,
           name: "",
           schedule: schedule,
           command: "",
