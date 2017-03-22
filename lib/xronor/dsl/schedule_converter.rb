@@ -15,10 +15,13 @@ module Xronor
       end
 
       def convert
-        cron_at, dow_diff = if @options[:at] && !@options[:at].strip.empty?
+        cron_at, dow_diff = case @options[:at]
+                            when String
                               parse_and_convert_time
+                            when Numeric
+                              [@options[:at], 0]
                             else
-                              [nil, 0]
+                              [0, 0]
                             end
 
         if WEEKDAYS.include?(@frequency) # :sunday, :monday, ..., :saturday
@@ -70,12 +73,12 @@ module Xronor
           digits[0] = comma_separated_timing(min_frequency, 59, cron_at.is_a?(Time) ? cron_at.min : 0)
         when Xronor::DSL.seconds(1, :hour)...Xronor::DSL.seconds(1, :day)
           hour_frequency = (shortcut / 60 / 60).round
-          digits[0] = cron_at.is_a?(Time) ? cron_at.min : "0"
+          digits[0] = cron_at.is_a?(Time) ? cron_at.min : cron_at
           digits[1] = comma_separated_timing(hour_frequency, 23, cron_at.is_a?(Time) ? cron_at.hour : 0)
         when Xronor::DSL.seconds(1, :day)...Xronor::DSL.seconds(1, :month)
           day_frequency = (shortcut / 24 / 60 / 60).round
-          digits[0] = cron_at.is_a?(Time) ? cron_at.min : "0"
-          digits[1] = cron_at.is_a?(Time) ? cron_at.hour : "0"
+          digits[0] = cron_at.is_a?(Time) ? cron_at.min : 0
+          digits[1] = cron_at.is_a?(Time) ? cron_at.hour : cron_at
           digits[2] = comma_separated_timing(day_frequency, 31, 1)
         end
 

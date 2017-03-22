@@ -120,7 +120,7 @@ module Xronor
           end
         end
 
-        context "when frequency is N.hours with offset" do
+        context "when frequency is N.hours with Time offset" do
           let(:frequency) do
             4.hours
           end
@@ -135,6 +135,24 @@ module Xronor
 
           it "should convert to cron expression" do
             expect(converter.convert).to eq "30 1,5,9,13,17,21 * * *"
+          end
+        end
+
+        context "when frequency is N.hours with Numeric offset" do
+          let(:frequency) do
+            1.hour
+          end
+
+          let(:options) do
+            {
+              at: 10,
+              timezone: "Asia/Tokyo",
+              cron_timezone: "UTC",
+            }
+          end
+
+          it "should convert to cron expression" do
+            expect(converter.convert).to eq "10 * * * *"
           end
         end
 
@@ -165,7 +183,7 @@ module Xronor
           end
         end
 
-        context "when frequency is N.hours with offset" do
+        context "when frequency is N.hours with Time offset" do
           let(:frequency) do
             4.days
           end
@@ -180,6 +198,23 @@ module Xronor
 
           it "should convert to cron expression" do
             expect(converter.convert).to eq "30 1 1,5,9,13,17,21,25,29 * *"
+          end
+        end
+        context "when frequency is N.hours with Numeric offset" do
+          let(:frequency) do
+            4.days
+          end
+
+          let(:options) do
+            {
+              at: 10,
+              timezone: "Asia/Tokyo",
+              cron_timezone: "UTC",
+            }
+          end
+
+          it "should convert to cron expression" do
+            expect(converter.convert).to eq "0 10 1,5,9,13,17,21,25,29 * *"
           end
         end
 
