@@ -34,6 +34,110 @@ module Xronor
           end
         end
 
+        context "when frequency is seconds" do
+          let(:frequency) do
+            30
+          end
+
+          it "should raise ArgumentError" do
+            expect do
+              converter.convert
+            end.to raise_error ArgumentError
+          end
+        end
+
+        context "when frequency is :minute" do
+          context "when frequency is symbol" do
+            let(:frequency) do
+              :minute
+            end
+
+            it "should convert to cron expression" do
+              expect(converter.convert).to eq "* * * * *"
+            end
+          end
+        end
+
+        context "when frequency is N.minutes without offset" do
+          let(:frequency) do
+            5.minutes
+          end
+
+          let(:options) do
+            {
+              timezone: "Asia/Tokyo",
+              cron_timezone: "UTC",
+            }
+          end
+
+          it "should convert to cron expression" do
+            expect(converter.convert).to eq "0,5,10,15,20,25,30,35,40,45,50,55 * * * *"
+          end
+        end
+
+        context "when frequency is N.minutes with offset" do
+          let(:frequency) do
+            5.minutes
+          end
+
+          let(:options) do
+            {
+              at: "10:30 am",
+              timezone: "Asia/Tokyo",
+              cron_timezone: "UTC",
+            }
+          end
+
+          it "should convert to cron expression" do
+            expect(converter.convert).to eq "30,35,40,45,50,55 * * * *"
+          end
+        end
+
+        context "when frequency is :hour" do
+            let(:frequency) do
+              :hour
+            end
+
+            it "should convert to cron expression" do
+              expect(converter.convert).to eq "30 * * * *"
+            end
+        end
+
+        context "when frequency is N.hours without offset" do
+          let(:frequency) do
+            4.hours
+          end
+
+          let(:options) do
+            {
+              timezone: "Asia/Tokyo",
+              cron_timezone: "UTC",
+            }
+          end
+
+          it "should convert to cron expression" do
+            expect(converter.convert).to eq "0 0,4,8,12,16,20 * * *"
+          end
+        end
+
+        context "when frequency is N.hours with offset" do
+          let(:frequency) do
+            4.hours
+          end
+
+          let(:options) do
+            {
+              at: "10:30 am",
+              timezone: "Asia/Tokyo",
+              cron_timezone: "UTC",
+            }
+          end
+
+          it "should convert to cron expression" do
+            expect(converter.convert).to eq "30 1,5,9,13,17,21 * * *"
+          end
+        end
+
         context "when frequency is :day" do
           let(:frequency) do
             :day
@@ -41,6 +145,41 @@ module Xronor
 
           it "should convert to cron expression" do
             expect(converter.convert).to eq "30 1 * * *"
+          end
+        end
+
+        context "when frequency is N.days without offset" do
+          let(:frequency) do
+            4.days
+          end
+
+          let(:options) do
+            {
+              timezone: "Asia/Tokyo",
+              cron_timezone: "UTC",
+            }
+          end
+
+          it "should convert to cron expression" do
+            expect(converter.convert).to eq "0 0 1,5,9,13,17,21,25,29 * *"
+          end
+        end
+
+        context "when frequency is N.hours with offset" do
+          let(:frequency) do
+            4.days
+          end
+
+          let(:options) do
+            {
+              at: "10:30 am",
+              timezone: "Asia/Tokyo",
+              cron_timezone: "UTC",
+            }
+          end
+
+          it "should convert to cron expression" do
+            expect(converter.convert).to eq "30 1 1,5,9,13,17,21,25,29 * *"
           end
         end
 

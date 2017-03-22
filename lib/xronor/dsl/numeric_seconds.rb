@@ -3,6 +3,10 @@
 module Xronor
   class DSL
     class NumericSeconds
+      def self.seconds(number, units)
+        self.new(number).send(units)
+      end
+
       def initialize(number)
         @number = number.to_i
       end

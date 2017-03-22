@@ -8,6 +8,10 @@ module Xronor
       def eval(body)
         self.new(body)
       end
+
+      def seconds(number, units)
+        Xronor::DSL::NumericSeconds.seconds(number, units)
+      end
     end
 
     def initialize(body)
