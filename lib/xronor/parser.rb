@@ -1,11 +1,12 @@
 module Xronor
   class Parser
-    def self.parse(filename, prefix, regexp)
-      Whenever.cron(file: filename).split("\n").delete_if { |line| line == "" }.map do |line|
-        fields = line.split(" ")
-        cron = fields[0..4].join(" ")
-        command = fields[5..-1].join(" ")
-        Job.from_crontab(cron, command, prefix, regexp)
+    def self.parse(filename, prefix = nil, regexp = nil)
+      body = open(filename).read
+      result = Xronor::DSL.eval(body).result
+
+      result.jobs.map do |job|
+        job.description ||= job.name
+        Xronor::Job.new(job.name, job.description, job.schedule, job.command)
       end
     end
   end

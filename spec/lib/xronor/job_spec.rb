@@ -68,6 +68,7 @@ module Xronor
       let(:job) do
         described_class.new(
           "scheduler-production-create_new_companies",
+          "description",
           "cron(10 0 * * ? *)",
           "/bin/bash -l -c 'bundle exec rake create_new_companies RAILS_ENV=production'",
         )
