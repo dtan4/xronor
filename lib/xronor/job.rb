@@ -33,6 +33,13 @@ module Xronor
       @command = command
     end
 
+    def cloud_watch_schedule
+      cron_fields = @schedule.split(" ")
+      cron_fields[DOW_INDEX] = "?" if cron_fields[DOM_INDEX] == "*" && cron_fields[DOW_INDEX] == "*"
+      cron_fields << "*" # Year
+      "cron(#{cron_fields.join(" ")})"
+    end
+
     def command
       @command
     end
