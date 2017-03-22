@@ -12,12 +12,8 @@ module Xronor
       end
 
       describe "#deregister_job" do
-        let(:job) do
-          double("job",
-            name: "scheduler-production-create_new_companies",
-            schedule: "cron(10 0 * * ? *)",
-            command: "/bin/bash -l -c 'bundle exec rake create_new_companies RAILS_ENV=production'",
-          )
+        let(:job_name) do
+          "scheduler-production-create_new_companies"
         end
 
         let(:targets) do
@@ -42,7 +38,7 @@ module Xronor
             name: "scheduler-production-create_new_companies",
           })
 
-          cwe.deregister_job(job)
+          cwe.deregister_job(job_name)
         end
       end
 
