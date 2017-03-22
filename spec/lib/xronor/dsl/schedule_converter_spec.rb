@@ -3,6 +3,25 @@ require "spec_helper"
 module Xronor
   class DSL
     describe ScheduleConverter do
+      let(:frequency) do
+        :day
+      end
+
+      let(:options) do
+        {
+          at: "10:30 am",
+          timezone: "Asia/Tokyo",
+          cron_timezone: "UTC",
+        }
+      end
+
+      describe ".convert" do
+        it "should call ScheduleConverter#convert" do
+          expect_any_instance_of(described_class).to receive(:convert)
+          described_class.convert(frequency, options)
+        end
+      end
+
       let(:converter) do
         described_class.new(frequency, options)
       end
