@@ -104,11 +104,15 @@ module Xronor
       describe "#register_job" do
         let(:job) do
           double("job",
-            name: "scheduler-production-create_new_companies",
-            schedule: "cron(10 0 * * ? *)",
+            name: "production-create_new_companies",
+            description: "Create new companies",
+            schedule: "10 0 * * *",
             command: "/bin/bash -l -c 'bundle exec rake create_new_companies RAILS_ENV=production'",
-            rule_name: "scheduler-production-create_new_companies-32343ed63f077",
           )
+        end
+
+        let(:prefix) do
+          "scheduler-"
         end
 
         let(:cluster) do
@@ -134,15 +138,15 @@ module Xronor
         before do
           client.stub_responses(:put_rule, rule_arn: rule_arn)
           client.stub_responses(:put_targets, failed_entry_count: 0, failed_entries: [])
-        end
 
-        it "should return rule ARN" do
+          allow(job).to receive(:cloud_watch_rule_name).with(prefix).and_return("scheduler-production-create_new_companies-7a7c4f3e190d7")
+          allow(job).to receive(:cloud_watch_schedule).and_return("cron(10 0 * * ? *)")
           allow(client).to receive(:put_rule).with({
-            name: "scheduler-production-create_new_companies-32343ed63f077",
+            name: "scheduler-production-create_new_companies-7a7c4f3e190d7",
             schedule_expression: "cron(10 0 * * ? *)",
           }).and_return(double("response", rule_arn: "arn:aws:events:ap-northeast-1:012345678901:rule/scheduler-production-create_new_companies"))
           allow(client).to receive(:put_targets).with({
-            rule: "scheduler-production-create_new_companies-32343ed63f077",
+            rule: "scheduler-production-create_new_companies-7a7c4f3e190d7",
             targets: [
               {
                 id: "id",
@@ -158,7 +162,10 @@ module Xronor
             ],
           })
           allow(cwe).to receive(:generate_id).and_return("id")
-          expect(cwe.register_job(job, cluster, task_definition, container, target_function_arn)).to eq "arn:aws:events:ap-northeast-1:012345678901:rule/scheduler-production-create_new_companies"
+        end
+
+        it "should return rule ARN" do
+          expect(cwe.register_job(job, prefix, cluster, task_definition, container, target_function_arn)).to eq "arn:aws:events:ap-northeast-1:012345678901:rule/scheduler-production-create_new_companies"
         end
       end
     end

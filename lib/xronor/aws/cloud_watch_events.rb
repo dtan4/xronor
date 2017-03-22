@@ -15,9 +15,10 @@ module Xronor
         @client.list_rules.rules.select { |rule| rule.name.start_with?(prefix) }.map(&:name)
       end
 
-      def register_job(job, cluster, task_definition, container, target_function_arn)
-        rule_arn = put_rule(job.rule_name, job.schedule)
-        put_target(job.rule_name, cluster, task_definition, container, job.command, target_function_arn)
+      def register_job(job, prefix, cluster, task_definition, container, target_function_arn)
+        rule_name = job.cloud_watch_rule_name(prefix)
+        rule_arn = put_rule(rule_name, job.cloud_watch_schedule)
+        put_target(rule_name, cluster, task_definition, container, job.command, target_function_arn)
         rule_arn
       end
 
