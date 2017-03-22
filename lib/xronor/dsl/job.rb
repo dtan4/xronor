@@ -20,6 +20,7 @@ module Xronor
           description: "",
           name: "",
           schedule: schedule,
+          command: "",
         )
 
         instance_eval(&block)
@@ -31,9 +32,34 @@ module Xronor
         end
       end
 
+      def process_template(template, options)
+        template.gsub(/:\w+/) do |key|
+          before_and_after = [$`[-1..-1], $'[0..0]]
+          option = options[key.sub(':', '').to_sym] || key
+
+          if before_and_after.all? { |c| c == "'" }
+            escape_single_quotes(option)
+          elsif before_and_after.all? { |c| c == '"' }
+            escape_double_quotes(option)
+          else
+            option
+          end
+        end.gsub(/\s+/m, " ").strip
+      end
+
       def result
         required(:name, @result.name)
         @result
+      end
+
+      private
+
+      def escape_single_quotes(str)
+        str.gsub(/'/) { "'\\''" }
+      end
+
+      def escape_double_quotes(str)
+        str.gsub(/"/) { '\"' }
       end
     end
   end

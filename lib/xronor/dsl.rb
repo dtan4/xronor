@@ -35,6 +35,16 @@ module Xronor
       @result.jobs << Xronor::DSL::Job.new(frequency, options.merge(@result.options), &block).result
     end
 
+    def job_type(name, template)
+      Xronor::DSL::Job.class_eval do
+        define_method(name) do |task, *args|
+          options = { task: task }
+          options.merge!(args[0]) if args[0].is_a? Hash
+          @result.command = process_template(template, options)
+        end
+      end
+    end
+
     def result
       @result
     end

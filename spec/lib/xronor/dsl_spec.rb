@@ -5,6 +5,9 @@ module Xronor
     describe "#result" do
       let(:body) do
         <<-BODY
+job_type :rake, "bundle exec rake :task RAILS_ENV=production"
+job_type :runner, "bin/rails runner ':task' RAILS_ENV=production"
+
 default do
   prefix "scheduler-"
   timezone "Asia/Tokyo"
@@ -14,10 +17,12 @@ end
 every :day, at: "10:30 am" do
   name "Update Elasticsearch"
   description "Update Elasticsearch indices"
+  rake "update_elasticsearch"
 end
 
 every "0 12 10,20 * *" do
   name "Send reports"
+  runner "script/send_reports"
 end
         BODY
       end
@@ -30,6 +35,8 @@ end
         result = dsl.result
         expect(result.options).to be_a Hash
         expect(result.jobs.length).to eq 2
+        expect(result.jobs[0].command).to eq "bundle exec rake update_elasticsearch RAILS_ENV=production"
+        expect(result.jobs[1].command).to eq  "bin/rails runner 'script/send_reports' RAILS_ENV=production"
       end
     end
   end
