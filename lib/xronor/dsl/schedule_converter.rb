@@ -26,27 +26,19 @@ module Xronor
         end
 
         shortcut = case @frequency
+                   when Numeric
+                     @frequency
                    when :minute
                      Xronor::DSL.seconds(1, :minute)
                    when :hour
                      Xronor::DSL.seconds(1, :hour)
                    when :day
                      Xronor::DSL.seconds(1, :day)
-                   when :week
-                     Xronor::DSL.seconds(1, :week)
-                   when :month
-                     Xronor::DSL.seconds(1, :month)
-                   when :year
-                     Xronor::DSL.seconds(1, :year)
-                   else
-                     @frequency
                    end
 
-        if shortcut.is_a?(Numeric)
-          cron(shortcut, cron_at)
-        else
-          nil
-        end
+        raise ArgumentError, "Invalid frequency #{@frequency}" if !shortcut.is_a?(Numeric)
+
+        cron(shortcut, cron_at)
       end
 
       private

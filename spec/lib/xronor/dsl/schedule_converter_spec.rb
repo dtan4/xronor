@@ -42,7 +42,7 @@ module Xronor
           it "should raise ArgumentError" do
             expect do
               converter.convert
-            end.to raise_error ArgumentError
+            end.to raise_error ArgumentError, "Time must be in minutes or higher"
           end
         end
 
@@ -180,6 +180,20 @@ module Xronor
 
           it "should convert to cron expression" do
             expect(converter.convert).to eq "30 1 1,5,9,13,17,21,25,29 * *"
+          end
+        end
+
+        [:week, :month, :year].each do |freq|
+          context "when frequency is #{freq}" do
+            let(:frequency) do
+              freq
+            end
+
+            it "should raise ArgumentError" do
+              expect do
+                converter.convert
+              end.to raise_error ArgumentError, "Invalid frequency #{freq}"
+            end
           end
         end
 
