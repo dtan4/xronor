@@ -20,7 +20,7 @@ module Xronor
     end
 
     def cloud_watch_rule_name(prefix)
-      "#{prefix}#{@name}-#{hashcode}"
+      "#{prefix}#{@name}-#{hashcode}".gsub(/[^\.\-_A-Za-z0-9]/, "-").downcase
     end
 
     private

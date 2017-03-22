@@ -3,7 +3,7 @@ require "spec_helper"
 module Xronor
   describe Job do
     let(:name) do
-      "production-create_new_companies"
+      "Create new companies"
     end
 
     let(:description) do
@@ -50,7 +50,7 @@ module Xronor
       end
 
       it "should return rule name" do
-        expect(job.cloud_watch_rule_name(prefix)).to eq "scheduler-production-create_new_companies-7a7c4f3e190d7"
+        expect(job.cloud_watch_rule_name(prefix)).to eq "scheduler-create-new-companies-4e8a044d96c6e"
       end
     end
   end
