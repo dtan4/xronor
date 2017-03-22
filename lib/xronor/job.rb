@@ -38,7 +38,7 @@ module Xronor
     private
 
     def hashcode
-      @hashcode ||= OpenSSL::Digest::SHA256.hexdigest("#{@name}\t#{@schedule}\t#{@command}")[0..12]
+      @hashcode ||= OpenSSL::Digest::SHA256.hexdigest("#{@name}\t#{@description}\t#{@schedule}\t#{@command}")[0..12]
     end
   end
 end

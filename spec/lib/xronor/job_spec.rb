@@ -70,7 +70,7 @@ module Xronor
       end
 
       it "should return rule name" do
-        expect(job.cloud_watch_rule_name(prefix)).to eq "scheduler-create-new-companies-4e8a044d96c6e"
+        expect(job.cloud_watch_rule_name(prefix)).to eq "scheduler-create-new-companies-bb48ff2c5fe6e"
       end
     end
   end
