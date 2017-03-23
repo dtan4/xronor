@@ -4,7 +4,8 @@ module Xronor
 
     desc "crontab SCHEDULEFILE", "Generate crontab file"
     def crontab(filename)
-      Xronor::Generator::Crontab.generate(filename, options)
+      body = Xronor::Generator::Crontab.generate(filename, options)
+      puts body
     end
 
     desc "cwa SCHEDULEFILE", "Register CloudWatch Events - Scheduler & ECS job runner"
