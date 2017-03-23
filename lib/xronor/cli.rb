@@ -18,5 +18,12 @@ module Xronor
     def cwa(filename)
       Xronor::Generator::CloudWatchEvents.generate(filename, options)
     end
+
+    desc "template SCHEDULEFILE", "Process one template from jobs"
+    option :template, required: true
+    def template(filename)
+      body = Xronor::Generator::ERB.generate_all_in_one(filename, options)
+      puts body
+    end
   end
 end

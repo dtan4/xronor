@@ -25,5 +25,14 @@ module Xronor
         ])
       end
     end
+
+    describe "template" do
+      it "should generate text from template" do
+        expect(Xronor::Generator::ERB).to receive(:generate_all_in_one)
+        described_class.new.invoke("template", [filename], [
+          "--template", "/path/to/template",
+        ])
+      end
+    end
   end
 end
