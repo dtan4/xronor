@@ -22,6 +22,12 @@ every :day, at: '0:00 am' do
   rake "send_greeting_notification"
 end
 
+every :day, at: '0:00 am', timezone: "Europe/Berlin" do
+  name "Send notifications for Berlin"
+  description "Send notifications for Berlin"
+  rake "send_notification[Europe/Berlin]"
+end
+
 every :wednesday, at: '0:10 am' do
   name "Create new companies"
   rake "create_new_companies"
