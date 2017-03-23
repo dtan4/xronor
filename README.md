@@ -218,6 +218,19 @@ Available `<options>`:
 |`timezone`|Timezone of described time in DSL|
 |`cron_timezone`|Timezone of the machine where schedule engine runs|
 
+#### `name` (Required)
+
+Define job name
+
+#### `description`
+
+Define job description.
+If `description` is not specified, job name will be used as description.
+
+#### `<job_type>` (e.g. `rake`)
+
+Define job command.
+
 ## Development
 
 After checking out the repo, run `bin/setup` to install dependencies. Then, run `rake spec` to run the tests. You can also run `bin/console` for an interactive prompt that will allow you to experiment.
