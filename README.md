@@ -164,7 +164,7 @@ Timezone format follow [tz database](https://en.wikipedia.org/wiki/List_of_tz_da
 |`timezone`|Timezone of described time in DSL|`UTC`|
 |`cron_timezone`|Timezone of the machine where schedule engine runs|`UTC`|
 
-For example, the following configuration will `10:30 am` parse as `10:30 UTC+9` then convert to `30 1 * * *` (`1:30 am UTC`).
+For example, the following configuration will parse `10:30 am` as `10:30 am UTC+9` then convert to `30 1 * * *` (`1:30 am UTC`).
 
 ```ruby
 default do
