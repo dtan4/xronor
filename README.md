@@ -228,6 +228,7 @@ Available `<frequency>`:
 |`:minute`|Invoke at every minute|
 |`:hour`|Invoke at every hour|
 |`:day`|Invoke at every day|
+|`:sunday`, `:monday`, ..., `saturday`|Invoke at every weekday|
 |`N.minutes` (N = 1,2,3,...)|Invoke at every N minutes|
 |`N.hours` (N = 1,2,3,...)|Invoke at every N hours|
 |`N.days` (N = 1,2,3,...)|Invoke at every N days|
