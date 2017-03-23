@@ -3,7 +3,7 @@ require "spec_helper"
 module Xronor
   module Generator
     describe ERB do
-      describe ".generate" do
+      describe ".generate_all_in_one" do
         let(:filename) do
           fixture_path("schedule.rb")
         end
@@ -19,7 +19,7 @@ module Xronor
         end
 
         it "should process ERB template" do
-          expect(described_class.generate(filename, options)).to eq <<-EOS
+          expect(described_class.generate_all_in_one(filename, options)).to eq <<-EOS
 # Send awesome mails - Send awesome mails
 15 * * * * /bin/bash -l -c 'bundle exec rake send_awesome_mail RAILS_ENV=production'
 
