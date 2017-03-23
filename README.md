@@ -55,6 +55,14 @@ Commands:
   xronor template_per_job SCHEDULERFILE --outdir=OUTDIR --template=TEMPLATE
 ```
 
+Xronor CLI converts DSL file to:
+
+- CloudWatch Events Rule (required `AWS_ACCESS_KEY_ID`, `AWS_SECRET_ACCESS_KEY` and `AWS_REGION` environment variables)
+- crontab file
+- file(s) from ERB template
+  - write all jobs in one file
+  - generate files per job
+
 ## Xronor DSL
 
 Xronor DSL is heavily inspired by [Whenever](https://github.com/javan/whenever) DSL.
