@@ -202,8 +202,8 @@ Available `<frequency>`:
 
 |key|description|
 |---|---|
-|`:minute`|Invoke at every minutes|
-|`:hour`|Invoke at every hours|
+|`:minute`|Invoke at every minute|
+|`:hour`|Invoke at every hour|
 |`:day`|Invoke at every day|
 |`N.minutes` (N = 1,2,3,...)|Invoke at every N minutes|
 |`N.hours` (N = 1,2,3,...)|Invoke at every N hours|
