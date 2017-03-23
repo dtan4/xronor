@@ -5,6 +5,29 @@
 
 Timezone-aware Job Scheduler DSL and Converter
 
+## Table of contents
+
+- [Why](#why)
+  * [Scheduled job execution system](#scheduled-job-execution-system)
+  * [Scheduler DSL](#scheduler-dsl)
+  * [:point_right:](#point_right)
+- [Installation](#installation)
+- [Usage](#usage)
+- [Xronor DSL](#xronor-dsl)
+  * [Configuration](#configuration)
+    + [`job_template`](#job_template)
+    + [`job_type` (Required at least one)](#job_type-required-at-least-one)
+    + [`default`](#default)
+  * [Job definition](#job-definition)
+    + [`every do ... end`](#every---do--end)
+    + [`name` (Required)](#name-required)
+    + [`description`](#description)
+    + [`` (e.g. `rake`)](#-eg-rake)
+- [Development](#development)
+- [Contributing](#contributing)
+- [Author](#author)
+- [License](#license)
+
 ## Why
 
 ### Scheduled job execution system
