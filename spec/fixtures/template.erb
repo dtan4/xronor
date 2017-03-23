@@ -1,0 +1,5 @@
+<% @jobs.each do |job| -%>
+# <%= job.name %> - <%= job.description %>
+<%= job.schedule %> <%= job.command %>
+
+<% end -%>
