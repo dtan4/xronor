@@ -131,7 +131,7 @@ will be converted to the below crontab:
 
 ### Configuration
 
-```
+```ruby
 job_template "/bin/bash -l -c ':job'"
 
 job_type :rake, "bundle exec rake :task RAILS_ENV=production"
@@ -155,7 +155,7 @@ Define job type and per-job command template.
 
 For example, the following configuration will generate `/bin/bash -l -c 'bundle exec rake update_elasticsearch'`.
 
-```
+```ruby
 job_template "/bin/bash -l -c ':job'"
 
 job_type :rake, "bundle exec rake :task"
