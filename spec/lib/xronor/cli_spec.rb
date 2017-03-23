@@ -7,9 +7,44 @@ module Xronor
     end
 
     describe "crontab" do
+      before do
+        allow(Xronor::Generator::Crontab).to receive(:generate).and_return(<<-EOS)
+# Send awesome mails - Send awesome mails
+15 * * * * /bin/bash -l -c 'bundle exec rake send_awesome_mail RAILS_ENV=production'
+
+# Update Elasticsearch indices - Update Elasticsearch indices
+10 * * * * /bin/bash -l -c 'bundle exec rake update_elasticsearch RAILS_ENV=production'
+
+# Send greeting notifications - Send greeting notifications for all users
+0 15 * * * /bin/bash -l -c 'bundle exec rake send_greeting_notification RAILS_ENV=production'
+
+# Create new companies - Create new companies
+10 15 * * 2 /bin/bash -l -c 'bundle exec rake create_new_companies RAILS_ENV=production'
+
+# Healthcheck - Healthcheck
+0 10 10,20 * * /bin/bash -l -c 'bundle exec rake ping RAILS_ENV=production'
+EOS
+      end
+
       it "should generate Crontab Events" do
-        expect(Xronor::Generator::Crontab).to receive(:generate)
-        described_class.new.invoke("crontab", [filename], [])
+        expect do
+          described_class.new.invoke("crontab", [filename], [])
+        end.to output(<<-EOS).to_stdout
+# Send awesome mails - Send awesome mails
+15 * * * * /bin/bash -l -c 'bundle exec rake send_awesome_mail RAILS_ENV=production'
+
+# Update Elasticsearch indices - Update Elasticsearch indices
+10 * * * * /bin/bash -l -c 'bundle exec rake update_elasticsearch RAILS_ENV=production'
+
+# Send greeting notifications - Send greeting notifications for all users
+0 15 * * * /bin/bash -l -c 'bundle exec rake send_greeting_notification RAILS_ENV=production'
+
+# Create new companies - Create new companies
+10 15 * * 2 /bin/bash -l -c 'bundle exec rake create_new_companies RAILS_ENV=production'
+
+# Healthcheck - Healthcheck
+0 10 10,20 * * /bin/bash -l -c 'bundle exec rake ping RAILS_ENV=production'
+EOS
       end
     end
 
