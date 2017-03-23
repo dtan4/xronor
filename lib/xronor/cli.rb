@@ -19,14 +19,14 @@ module Xronor
       Xronor::Generator::CloudWatchEvents.generate(filename, options)
     end
 
-    desc "template SCHEDULEFILE", "Process one template from jobs"
+    desc "template SCHEDULEFILE", "Generate single file"
     option :template, required: true
     def template(filename)
       body = Xronor::Generator::ERB.generate_all_in_one(filename, options)
       puts body
     end
 
-    desc "template_per_job SCHEDULERFILE", "Generate texts from template per job"
+    desc "template_per_job SCHEDULERFILE", "Generate files per job"
     option :ext, default: nil
     option :outdir, required: true
     option :template, required: true
