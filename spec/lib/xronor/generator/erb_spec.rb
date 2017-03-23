@@ -5,7 +5,7 @@ module Xronor
     describe ERB do
       describe ".generate_all_in_one" do
         let(:filename) do
-          fixture_path("schedule.rb")
+          "/path/to/schedule"
         end
 
         let(:template) do
@@ -16,6 +16,41 @@ module Xronor
           {
             template: template,
           }
+        end
+
+        before do
+          allow(Xronor::Parser).to receive(:parse).and_return([
+            double("job1",
+              name: "Send awesome mails",
+              description: "Send awesome mails",
+              schedule: "15 * * * *",
+              command: "/bin/bash -l -c 'bundle exec rake send_awesome_mail RAILS_ENV=production'",
+            ),
+            double("job2",
+              name: "Update Elasticsearch indices",
+              description: "Update Elasticsearch indices",
+              schedule: "10 * * * *",
+              command: "/bin/bash -l -c 'bundle exec rake update_elasticsearch RAILS_ENV=production'",
+            ),
+            double("job3",
+              name: "Send greeting notifications",
+              description: "Send greeting notifications for all users",
+              schedule: "0 15 * * *",
+              command: "/bin/bash -l -c 'bundle exec rake send_greeting_notification RAILS_ENV=production'",
+            ),
+            double("job4",
+              name: "Create new companies",
+              description: "Create new companies",
+              schedule: "10 15 * * 2",
+              command: "/bin/bash -l -c 'bundle exec rake create_new_companies RAILS_ENV=production'",
+            ),
+            double("job5",
+              name: "Healthcheck",
+              description: "Healthcheck",
+              schedule: "0 10 10,20 * *",
+              command: "/bin/bash -l -c 'bundle exec rake ping RAILS_ENV=production'",
+            ),
+          ])
         end
 
         it "should process ERB template" do
@@ -41,7 +76,7 @@ module Xronor
 
       describe ".generate_per_job" do
         let(:filename) do
-          fixture_path("schedule.rb")
+          "/path/to/schedule"
         end
 
         let(:template) do
@@ -52,6 +87,41 @@ module Xronor
           {
             template: template,
           }
+        end
+
+        before do
+          allow(Xronor::Parser).to receive(:parse).and_return([
+            double("job1",
+              name: "Send awesome mails",
+              description: "Send awesome mails",
+              schedule: "15 * * * *",
+              command: "/bin/bash -l -c 'bundle exec rake send_awesome_mail RAILS_ENV=production'",
+            ),
+            double("job2",
+              name: "Update Elasticsearch indices",
+              description: "Update Elasticsearch indices",
+              schedule: "10 * * * *",
+              command: "/bin/bash -l -c 'bundle exec rake update_elasticsearch RAILS_ENV=production'",
+            ),
+            double("job3",
+              name: "Send greeting notifications",
+              description: "Send greeting notifications for all users",
+              schedule: "0 15 * * *",
+              command: "/bin/bash -l -c 'bundle exec rake send_greeting_notification RAILS_ENV=production'",
+            ),
+            double("job4",
+              name: "Create new companies",
+              description: "Create new companies",
+              schedule: "10 15 * * 2",
+              command: "/bin/bash -l -c 'bundle exec rake create_new_companies RAILS_ENV=production'",
+            ),
+            double("job5",
+              name: "Healthcheck",
+              description: "Healthcheck",
+              schedule: "0 10 10,20 * *",
+              command: "/bin/bash -l -c 'bundle exec rake ping RAILS_ENV=production'",
+            ),
+          ])
         end
 
         it "should process ERB template" do

@@ -34,7 +34,7 @@ module Xronor
     end
 
     def every(frequency, options = {}, &block)
-      @result.jobs << Xronor::DSL::Job.new(frequency, options.merge(@result.options), &block).result
+      @result.jobs << Xronor::DSL::Job.new(frequency, @result.options.merge(options), &block).result
     end
 
     def job_template(template)

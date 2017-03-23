@@ -30,6 +30,12 @@ module Xronor
                 command: "/bin/bash -l -c 'bundle exec rake send_greeting_notification RAILS_ENV=production'",
               ),
               OpenStruct.new(
+                name: "Send notifications for Berlin",
+                description: "Send notifications for Berlin",
+                schedule: "0 23 * * *",
+                command: "/bin/bash -l -c 'bundle exec rake send_notification[Europe/Berlin] RAILS_ENV=production'",
+              ),
+              OpenStruct.new(
                 name: "Create new companies",
                 description: nil,
                 schedule: "10 15 * * 2",
@@ -70,6 +76,12 @@ module Xronor
               command: "/bin/bash -l -c 'bundle exec rake send_greeting_notification RAILS_ENV=production'",
             },
             {
+              name: "Send notifications for Berlin",
+              description: "Send notifications for Berlin",
+              schedule: "0 23 * * *",
+              command: "/bin/bash -l -c 'bundle exec rake send_notification[Europe/Berlin] RAILS_ENV=production'",
+            },
+            {
               name: "Create new companies",
               description: "Create new companies",
               schedule: "10 15 * * 2",
@@ -86,7 +98,7 @@ module Xronor
           end
 
           jobs = described_class.parse(filename)
-          expect(jobs.length).to eq 5
+          expect(jobs.length).to eq 6
         end
       end
 
@@ -112,6 +124,12 @@ module Xronor
               command: "/bin/bash -l -c 'bundle exec rake send_greeting_notification RAILS_ENV=production'",
             },
             {
+              name: "Send notifications for Berlin",
+              description: "Send notifications for Berlin",
+              schedule: "0 23 * * *",
+              command: "/bin/bash -l -c 'bundle exec rake send_notification[Europe/Berlin] RAILS_ENV=production'",
+            },
+            {
               name: "Create new companies",
               description: "Create new companies",
               schedule: "10 15 * * 2",
@@ -128,7 +146,7 @@ module Xronor
           end
 
           jobs = described_class.parse(filename)
-          expect(jobs.length).to eq 5
+          expect(jobs.length).to eq 6
         end
       end
     end
