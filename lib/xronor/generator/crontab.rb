@@ -5,13 +5,12 @@ module Xronor
         def generate(filename, options)
           jobs = Xronor::Parser.parse(filename)
 
-          jobs.each do |job|
-            puts <<-EOS
+          jobs.map do |job|
+            <<-EOS
 # #{job.name} - #{job.description}
 #{[job.schedule, job.command].join(" ")}
-
-        EOS
-          end
+EOS
+          end.join("\n")
         end
       end
     end
