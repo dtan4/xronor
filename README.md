@@ -103,19 +103,19 @@ Or install it yourself as:
 
 ```
 Commands:
-  xronor crontab SCHEDULEFILE  xronor cwa SCHEDULEFILE --cluster=CLUSTER --container=CONTAINER --function=FUNCTION --table=TABLE --task-definition=TASK_DEFINITION
-  xronor help [COMMAND]
+  xronor crontab SCHEDULEFILE
+  xronor cwa SCHEDULEFILE --cluster=CLUSTER --container=CONTAINER --function=FUNCTION --table=TABLE --task-definition=TASK_DEFINITION
   xronor template SCHEDULEFILE --template=TEMPLATE
   xronor template_per_job SCHEDULERFILE --outdir=OUTDIR --template=TEMPLATE
 ```
 
 Xronor CLI converts DSL file to:
 
-- CloudWatch Events Rule (required `AWS_ACCESS_KEY_ID`, `AWS_SECRET_ACCESS_KEY` and `AWS_REGION` environment variables)
-- crontab file
+- `xronor cwa` CloudWatch Events Rule (requires `AWS_ACCESS_KEY_ID`, `AWS_SECRET_ACCESS_KEY` and `AWS_REGION` environment variables)
+- `xronor crontab` crontab file
 - file(s) from ERB template
-  - write all jobs in one file
-  - generate files per job
+  - `xronor template` write all jobs in one file
+  - `xronor template_per_job` generate files per job
 
 ## Xronor DSL
 
