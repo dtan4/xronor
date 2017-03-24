@@ -9,8 +9,8 @@ Gem::Specification.new do |spec|
   spec.authors       = ["Daisuke Fujita"]
   spec.email         = ["dtanshi45@gmail.com"]
 
-  spec.summary       = %q{Whenever DSL -> CloudWatch Events Schedule Rule & ECS Task Parameter}
-  spec.description   = %q{Convert Whenever DSL to CloudWatch Events Schedule Rule to invoke job on ECS}
+  spec.summary       = %q{Timezone-aware Job Scheduler DSL and Converter}
+  spec.description   = %q{Timezone-aware Job Scheduler DSL and Converter}
   spec.homepage      = "https://github.com/dtan4/xronor"
   spec.license       = "MIT"
 
