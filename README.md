@@ -48,6 +48,7 @@ end
   * [Scheduled job execution system](#scheduled-job-execution-system)
   * [Scheduler DSL](#scheduler-dsl)
   * [:point_right:](#point_right)
+- [Requirements](#requirements)
 - [Installation](#installation)
 - [Usage](#usage)
 - [Xronor DSL](#xronor-dsl)
@@ -82,6 +83,9 @@ To resolve above problems, we need:
   - Just like an enhance of Whenever
 - a DSL converter which is easy to register CloudWatch Events rule
 
+## Requirements
+
+Ruby 2.2.2 or above
 
 ## Installation
 
