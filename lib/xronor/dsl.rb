@@ -37,6 +37,7 @@ module Xronor
 
     def every(frequency, options = {}, &block)
       job = Xronor::DSL::Job.new(frequency, @result.options.merge(options), &block).result
+      raise Xronor::DSL::DuplicatedError, "Job \"#{job.name}\" already exists" if @result.jobs[job.name]
       @result.jobs[job.name] = job
     end
 
