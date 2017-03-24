@@ -5,6 +5,8 @@ module Xronor
     DEFAULT_CRON_TIMEZONE = "UTC"
     DEFAULT_JOB_TEMPLATE = ":job"
 
+    class DuplicatedError < StandardError; end
+
     class << self
       def eval(body)
         self.new(body)
@@ -17,7 +19,7 @@ module Xronor
 
     def initialize(body)
       @result = OpenStruct.new(
-        jobs: [],
+        jobs: {},
         options: {
           prefix: DEFAULT_PREFIX,
           timezone: DEFAULT_TIMEZONE,
@@ -34,7 +36,9 @@ module Xronor
     end
 
     def every(frequency, options = {}, &block)
-      @result.jobs << Xronor::DSL::Job.new(frequency, @result.options.merge(options), &block).result
+      job = Xronor::DSL::Job.new(frequency, @result.options.merge(options), &block).result
+      raise Xronor::DSL::DuplicatedError, "Job \"#{job.name}\" already exists" if @result.jobs[job.name]
+      @result.jobs[job.name] = job
     end
 
     def job_template(template)

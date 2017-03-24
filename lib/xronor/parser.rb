@@ -4,7 +4,7 @@ module Xronor
       body = open(filename).read
       result = Xronor::DSL.eval(body).result
 
-      result.jobs.map do |job|
+      result.jobs.values.map do |job|
         job.description ||= job.name
         Xronor::Job.new(job.name, job.description, job.schedule, job.command)
       end
