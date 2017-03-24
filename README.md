@@ -93,6 +93,8 @@ Xronor CLI converts DSL file to:
 
 Xronor DSL is heavily inspired by [Whenever](https://github.com/javan/whenever) DSL.
 
+For example,
+
 ```ruby
 job_template "/bin/bash -l -c ':job'"
 
@@ -130,7 +132,7 @@ every "0 10 10,20 * *" do
 end
 ```
 
-will be converted to the below crontab:
+will be converted to the following crontab:
 
 ```
 # Send awesome mails - Send awesome mails
@@ -191,7 +193,7 @@ end
 #### `default`
 
 Set default timezone.
-Timezone format follow [tz database](https://en.wikipedia.org/wiki/List_of_tz_database_time_zones) (e.g. `UTC`, `Asia/Tokyo`).
+Timezone format follows [tz database](https://en.wikipedia.org/wiki/List_of_tz_database_time_zones) (e.g. `UTC`, `Asia/Tokyo`).
 
 |key|description|default|
 |---|---|---|
@@ -228,7 +230,7 @@ Available `<frequency>`:
 |`:minute`|Invoke at every minute|
 |`:hour`|Invoke at every hour|
 |`:day`|Invoke at every day|
-|`:sunday`, `:monday`, ..., `saturday`|Invoke at every weekday|
+|`:sunday`, `:monday`, ..., `:saturday`|Invoke at every weekday|
 |`N.minutes` (N = 1,2,3,...)|Invoke at every N minutes|
 |`N.hours` (N = 1,2,3,...)|Invoke at every N hours|
 |`N.days` (N = 1,2,3,...)|Invoke at every N days|
