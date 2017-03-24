@@ -10,44 +10,44 @@ module Xronor
       context "when DSL is mocked" do
         let(:dsl) do
           double("dsl", result: OpenStruct.new(
-            jobs: [
-              OpenStruct.new(
+            jobs: {
+              "Send awesome mails" => OpenStruct.new(
                 name: "Send awesome mails",
                 description: nil,
                 schedule: "15 * * * *",
                 command: "/bin/bash -l -c 'bundle exec rake send_awesome_mail RAILS_ENV=production'",
               ),
-              OpenStruct.new(
+              "Update Elasticsearch indices" => OpenStruct.new(
                 name: "Update Elasticsearch indices",
                 description: nil,
                 schedule: "10 * * * *",
                 command: "/bin/bash -l -c 'bundle exec rake update_elasticsearch RAILS_ENV=production'",
               ),
-              OpenStruct.new(
+              "Send greeting notifications" => OpenStruct.new(
                 name: "Send greeting notifications",
                 description: "Send greeting notifications for all users",
                 schedule: "0 15 * * *",
                 command: "/bin/bash -l -c 'bundle exec rake send_greeting_notification RAILS_ENV=production'",
               ),
-              OpenStruct.new(
+              "Send notifications for Berlin" => OpenStruct.new(
                 name: "Send notifications for Berlin",
                 description: "Send notifications for Berlin",
                 schedule: "0 23 * * *",
                 command: "/bin/bash -l -c 'bundle exec rake send_notification[Europe/Berlin] RAILS_ENV=production'",
               ),
-              OpenStruct.new(
+              "Create new companies" => OpenStruct.new(
                 name: "Create new companies",
                 description: nil,
                 schedule: "10 15 * * 2",
                 command: "/bin/bash -l -c 'bundle exec rake create_new_companies RAILS_ENV=production'",
               ),
-              OpenStruct.new(
+              "Healthcheck" => OpenStruct.new(
                 name: "Healthcheck",
                 description: nil,
                 schedule: "0 10 10,20 * *",
                 command: "/bin/bash -l -c 'bundle exec rake ping RAILS_ENV=production'",
               ),
-            ],
+            },
           ))
         end
 

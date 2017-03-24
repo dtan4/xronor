@@ -3,7 +3,8 @@ require "spec_helper"
 module Xronor
   describe DSL do
     describe "#result" do
-      let(:body) do
+      context "jobs are not duplicated" do
+        let(:body) do
         <<-BODY
 job_template "/bin/bash -l -c ':job'"
 
@@ -27,18 +28,19 @@ every "0 12 10,20 * *" do
   runner "script/send_reports"
 end
         BODY
-      end
+        end
 
-      let(:dsl) do
-        described_class.eval(body)
-      end
+        let(:dsl) do
+          described_class.eval(body)
+        end
 
-      it "should parse DSL" do
-        result = dsl.result
-        expect(result.options).to be_a Hash
-        expect(result.jobs.length).to eq 2
-        expect(result.jobs[0].command).to eq "/bin/bash -l -c 'bundle exec rake update_elasticsearch RAILS_ENV=production'"
-        expect(result.jobs[1].command).to eq  "/bin/bash -l -c 'bin/rails runner '\\''script/send_reports'\\'' RAILS_ENV=production'"
+        it "should parse DSL" do
+          result = dsl.result
+          expect(result.options).to be_a Hash
+          expect(result.jobs.length).to eq 2
+          expect(result.jobs["Update Elasticsearch"].command).to eq "/bin/bash -l -c 'bundle exec rake update_elasticsearch RAILS_ENV=production'"
+          expect(result.jobs["Send reports"].command).to eq  "/bin/bash -l -c 'bin/rails runner '\\''script/send_reports'\\'' RAILS_ENV=production'"
+        end
       end
     end
   end
