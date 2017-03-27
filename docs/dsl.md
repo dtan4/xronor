@@ -162,12 +162,13 @@ Available `<options>`:
 |key|description|
 |---|---|
 |`at`|Invocation time|
-|`timezone`|Timezone of described time in DSL|
-|`cron_timezone`|Timezone of the machine where schedule engine runs|
+|`timezone`|Timezone of described time in DSL. This overrides default `timezone` value.|
+|`cron_timezone`|Timezone of the machine where schedule engine runs. This overrides default `cron_timezone` value.|
 
 ### `name` (Required)
 
-Define job name
+Define job name.
+Job name must contain alphabets, numbers, hyphen (`-`), underscore (`_`) and period (`.`) only.
 
 ### `description`
 
