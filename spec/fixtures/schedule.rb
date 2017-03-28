@@ -22,7 +22,7 @@ every :day, at: '0:00 am' do
   rake "send_greeting_notification"
 end
 
-every :day, at: '0:00 am', timezone: "Europe/Berlin" do
+every :day, at: '0:00 am', timezone: "Etc/GMT-1" do
   name "Send notifications for Berlin"
   description "Send notifications for Berlin"
   rake "send_notification[Europe/Berlin]"
