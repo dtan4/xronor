@@ -126,19 +126,19 @@ module Xronor
 
         it "should process ERB template" do
           expect(described_class.generate_per_job(filename, options)).to eq({
-            "send_awesome_mails" => <<-EOS,
+            "send-awesome-mails" => <<-EOS,
 # Send awesome mails - Send awesome mails
 15 * * * * /bin/bash -l -c 'bundle exec rake send_awesome_mail RAILS_ENV=production'
  EOS
-            "update_elasticsearch_indices" => <<-EOS,
+            "update-elasticsearch-indices" => <<-EOS,
 # Update Elasticsearch indices - Update Elasticsearch indices
 10 * * * * /bin/bash -l -c 'bundle exec rake update_elasticsearch RAILS_ENV=production'
 EOS
-            "send_greeting_notifications" => <<-EOS,
+            "send-greeting-notifications" => <<-EOS,
 # Send greeting notifications - Send greeting notifications for all users
 0 15 * * * /bin/bash -l -c 'bundle exec rake send_greeting_notification RAILS_ENV=production'
 EOS
-            "create_new_companies" => <<-EOS,
+            "create-new-companies" => <<-EOS,
 # Create new companies - Create new companies
 10 15 * * 2 /bin/bash -l -c 'bundle exec rake create_new_companies RAILS_ENV=production'
 EOS
