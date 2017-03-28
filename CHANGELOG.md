@@ -1,4 +1,11 @@
-# [v0.1.1](https://github.com/dtan4/xronor/releases/tag/v0.1.0) (2017-03-24)
+# [v0.1.2](https://github.com/dtan4/xronor/releases/tag/v0.1.2) (2017-03-28)
+
+## Updated
+
+- Add helper method `Job#k8s_pod_name` [#15](https://github.com/dtan4/xronor/pull/15)
+- Normalize generated file names [#14](https://github.com/dtan4/xronor/pull/14)
+
+# [v0.1.1](https://github.com/dtan4/xronor/releases/tag/v0.1.1) (2017-03-24)
 
 ## Fixed
 
