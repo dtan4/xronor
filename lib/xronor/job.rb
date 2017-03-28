@@ -3,6 +3,8 @@ module Xronor
     DOM_INDEX = 2
     DOW_INDEX = 4
 
+    POD_NAME_MAX_LENGTH = 253
+
     def initialize(name, description, schedule, command)
       @name = name
       @description = description
@@ -33,6 +35,10 @@ module Xronor
 
     def cloud_watch_rule_name(prefix)
       "#{prefix}#{@name}-#{hashcode}".gsub(/[^\.\-_A-Za-z0-9]/, "-").downcase
+    end
+
+    def k8s_pod_name
+      @name.gsub(/[^\.\-A-Za-z0-9]/, "-").downcase[0...POD_NAME_MAX_LENGTH]
     end
 
     private

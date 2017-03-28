@@ -64,6 +64,24 @@ module Xronor
       end
     end
 
+    describe "#k8s_pod_name" do
+      context "when name is enough short" do
+        it "should normalize job name for Kubernetes Pod name spec" do
+          expect(job.k8s_pod_name).to eq "create-new-companies"
+        end
+      end
+
+      context "when name is too long" do
+        let(:name) do
+          "abcde12345abcde12345abcde12345abcde12345abcde12345abcde12345abcde12345abcde12345abcde12345abcde12345abcde12345abcde12345abcde12345abcde12345abcde12345abcde12345abcde12345abcde12345abcde12345abcde12345abcde12345abcde12345abcde12345abcde12345abcde12345abcde12345abcde12345abcde12345abcde12345abcde12345"
+        end
+
+        it "should normalize job name for Kubernetes Pod name spec" do
+          expect(job.k8s_pod_name).to eq "abcde12345abcde12345abcde12345abcde12345abcde12345abcde12345abcde12345abcde12345abcde12345abcde12345abcde12345abcde12345abcde12345abcde12345abcde12345abcde12345abcde12345abcde12345abcde12345abcde12345abcde12345abcde12345abcde12345abcde12345abcde12345abc"
+        end
+      end
+    end
+
     describe "#cloud_watch_rule_name" do
       let(:prefix) do
         "scheduler-"
