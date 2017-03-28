@@ -2,6 +2,8 @@
 
 [![Build Status](https://travis-ci.org/dtan4/xronor.svg?branch=master)](https://travis-ci.org/dtan4/xronor)
 [![codecov](https://codecov.io/gh/dtan4/xronor/branch/master/graph/badge.svg)](https://codecov.io/gh/dtan4/xronor)
+[![Gem Version](https://badge.fury.io/rb/xronor.svg)](https://badge.fury.io/rb/xronor)
+[![MIT License](http://img.shields.io/badge/license-MIT-blue.svg?style=flat)](LICENSE)
 
 Timezone-aware Job Scheduler DSL and Converter
 

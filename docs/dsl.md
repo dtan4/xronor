@@ -130,6 +130,16 @@ default do
 end
 ```
 
+:warning: __NOTE:__ If the specified timezone has DST, generated crontab expression may differ depending on the date you executed Xronor converter.
+For example, `every :day, at: 10:30 am` in `Europe/Berlin` will be converted as
+
+- `30 9 * * *` if you execute Xronor converter from the last Sunday of October to the last Sunday of March
+- `30 8 * * *` if you execute Xronor converter during other period
+
+This difference is derived from [Central European Summer Time (CEST)](https://en.wikipedia.org/wiki/Central_European_Summer_Time).
+
+To avoid this, please specify _the difference from GMT_, like `Etc/GMT-2` (equal to `UTC+2`).
+
 ## Job definition
 
 ```ruby
