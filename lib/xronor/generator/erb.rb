@@ -14,7 +14,7 @@ module Xronor
 
           jobs.inject({}) do |result, job|
             @job = job
-            result[job.name.gsub(/[^\.\-_A-Za-z0-9]/, "_").downcase] = ::ERB.new(erb, nil, "-").result(binding)
+            result[job.name.gsub(/[^\.\-A-Za-z0-9]/, "-").downcase] = ::ERB.new(erb, nil, "-").result(binding)
             result
           end
         end
