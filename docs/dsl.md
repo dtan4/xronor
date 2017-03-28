@@ -138,7 +138,7 @@ For example, `every :day, at: 10:30 am` in `Europe/Berlin` will be converted as
 
 This difference is derived from [Central European Summer Time (CEST)](https://en.wikipedia.org/wiki/Central_European_Summer_Time).
 
-To avoid this, please specify _the difference from GMT_, like `Etc/GMT-9` (equal to `UTC+9`.)
+To avoid this, please specify _the difference from GMT_, like `Etc/GMT-2` (equal to `UTC+2`).
 
 ## Job definition
 
