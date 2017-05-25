@@ -1,3 +1,10 @@
+# [v0.2.0](https://github.com/dtan4/xronor/releases/tag/v0.2.0) (2017-05-25)
+
+## Fixed
+
+- Parse ambiguous time to be more intuitive [#18](https://github.com/dtan4/xronor/pull/18)
+  - :warning: Due to this change, some conversion result may be changed after upgrading
+
 # [v0.1.2](https://github.com/dtan4/xronor/releases/tag/v0.1.2) (2017-03-28)
 
 ## Updated
