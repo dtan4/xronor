@@ -326,6 +326,48 @@ module Xronor
             end
           end
         end
+
+        context "when am/pm is omitted from :at" do
+          let(:frequency) do
+            :day
+          end
+
+          [
+            { at: "0:00", expr: "0 0 * * *" },
+            { at: "00:00", expr: "0 0 * * *" },
+            { at: "0:0", expr: "0 0 * * *" },
+            { at: "0:30", expr: "30 0 * * *" },
+            { at: "1:30", expr: "30 1 * * *" },
+            { at: "01:30", expr: "30 1 * * *" },
+            { at: "3:30", expr: "30 3 * * *" },
+            { at: "03:30", expr: "30 3 * * *" },
+            { at: "5:30", expr: "30 5 * * *" },
+            { at: "05:30", expr: "30 5 * * *" },
+            { at: "7:30", expr: "30 7 * * *" },
+            { at: "9:30", expr: "30 9 * * *" },
+            { at: "11:30", expr: "30 11 * * *" },
+            { at: "12:00", expr: "0 12 * * *" },
+            { at: "12:30", expr: "30 12 * * *" },
+            { at: "13:30", expr: "30 13 * * *" },
+            { at: "15:30", expr: "30 15 * * *" },
+            { at: "20:30", expr: "30 20 * * *" },
+            { at: "23:30", expr: "30 23 * * *" },
+          ].each do |testcase|
+            context testcase[:at] do
+              let(:options) do
+                {
+                  at: testcase[:at],
+                  timezone: "Asia/Tokyo",
+                  cron_timezone: "Asia/Tokyo",
+                }
+              end
+
+              it "should convert to correct cron expression" do
+                expect(converter.convert).to eq testcase[:expr]
+              end
+            end
+          end
+        end
       end
     end
   end

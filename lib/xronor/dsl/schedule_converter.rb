@@ -136,7 +136,7 @@ module Xronor
         original_time_class = Chronic.time_class
         Time.zone = @options[:timezone]
         Chronic.time_class = Time.zone
-        local_at = Chronic.parse(@options[:at])
+        local_at = Chronic.parse(@options[:at], ambiguous_time_range: 1)
         cron_at = local_at.in_time_zone(@options[:cron_timezone])
         Chronic.time_class = original_time_class
 
