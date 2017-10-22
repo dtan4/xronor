@@ -116,11 +116,10 @@ module Xronor
         dow = WEEKDAYS.index(@frequency)
         dow += dow_diff
 
-        case dow
-        when -1 # Sunday -> Saturday
-          dow = 6
-        when 7  # Saturday -> Sunday
-          dow = 0
+        if dow <= -1
+          dow += 7
+        elsif dow >= 7
+          dow -= 7
         end
 
         [
