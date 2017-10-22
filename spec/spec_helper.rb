@@ -15,6 +15,7 @@ require "bundler/setup"
 require "xronor"
 
 require "fileutils"
+require "timecop"
 
 RSpec.configure do |config|
   # Enable flags like --only-failures and --next-failure

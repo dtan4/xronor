@@ -273,6 +273,16 @@ module Xronor
               it "should convert to cron expression" do
                 expect(converter.convert).to eq "30 18 * * 2"
               end
+
+              %w(Sunday Monday Tuesday Wednesday Thursday Friday Saturday).each.with_index do |weekday, i|
+                context "and today is #{weekday}" do
+                  it "should convert to cron expression" do
+                    Timecop.freeze(Time.parse("2017-10-#{22 + i} 18:07:36 +0900")) do
+                      expect(converter.convert).to eq "30 18 * * 2"
+                    end
+                  end
+                end
+              end
             end
 
             context "Wedneday -> Thursday" do
@@ -286,6 +296,16 @@ module Xronor
 
               it "should convert to cron expression" do
                 expect(converter.convert).to eq "30 3 * * 4"
+              end
+
+              %w(Sunday Monday Tuesday Wednesday Thursday Friday Saturday).each.with_index do |weekday, i|
+                context "and today is #{weekday}" do
+                  it "should convert to cron expression" do
+                    Timecop.freeze(Time.parse("2017-10-#{22 + i} 18:07:36 +0900")) do
+                      expect(converter.convert).to eq "30 3 * * 4"
+                    end
+                  end
+                end
               end
             end
 
@@ -305,6 +325,16 @@ module Xronor
               it "should convert to cron expression" do
                 expect(converter.convert).to eq "30 18 * * 6"
               end
+
+              %w(Sunday Monday Tuesday Wednesday Thursday Friday Saturday).each.with_index do |weekday, i|
+                context "and today is #{weekday}" do
+                  it "should convert to cron expression" do
+                    Timecop.freeze(Time.parse("2017-10-#{22 + i} 18:07:36 +0900")) do
+                      expect(converter.convert).to eq "30 18 * * 6"
+                    end
+                  end
+                end
+              end
             end
 
             context "Saturday -> Sunday" do
@@ -322,6 +352,16 @@ module Xronor
 
               it "should convert to cron expression" do
                 expect(converter.convert).to eq "30 3 * * 0"
+              end
+
+              %w(Sunday Monday Tuesday Wednesday Thursday Friday Saturday).each.with_index do |weekday, i|
+                context "and today is #{weekday}" do
+                  it "should convert to cron expression" do
+                    Timecop.freeze(Time.parse("2017-10-#{22 + i} 18:07:36 +0900")) do
+                      expect(converter.convert).to eq "30 3 * * 0"
+                    end
+                  end
+                end
               end
             end
           end
